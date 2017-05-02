@@ -36,6 +36,7 @@ defmodule Exsite.Web do
 
       import Exsite.Router.Helpers
       import Exsite.Gettext
+      import Exsite.Auth, only: [authenticate_user: 2]
     end
   end
 
@@ -58,6 +59,8 @@ defmodule Exsite.Web do
   def router do
     quote do
       use Phoenix.Router
+
+      import Exsite.Auth, only: [authenticate_user: 2]
     end
   end
 
@@ -69,6 +72,14 @@ defmodule Exsite.Web do
       import Ecto
       import Ecto.Query
       import Exsite.Gettext
+    end
+  end
+
+  def dal do
+    quote do
+      alias Exsite.Repo
+      import Ecto
+      import Ecto.Query
     end
   end
 

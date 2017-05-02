@@ -1,0 +1,68 @@
+<h2>Show post</h2>
+
+<ul>
+
+  <li>
+    <strong>User:</strong>
+    <%= @post.user_id %>
+  </li>
+
+  <li>
+    <strong>Title:</strong>
+    <%= @post.title %>
+  </li>
+
+  <li>
+    <strong>Content:</strong>
+    <%= @post.content %>
+  </li>
+
+  <li>
+    <strong>Content format:</strong>
+    <%= @post.content_format %>
+  </li>
+
+  <li>
+    <strong>Last commented at:</strong>
+    <%= @post.last_commented_at %>
+  </li>
+
+  <li>
+    <strong>Last comment user:</strong>
+    <%= @post.last_comment_user_id %>
+  </li>
+
+  <li>
+    <strong>Topic:</strong>
+    <%= @post.topic_id %>
+  </li>
+
+  <li>
+    <strong>State:</strong>
+    <%= @post.state %>
+  </li>
+
+  <li>
+    <strong>Commentes count:</strong>
+    <%= @post.commentes_count %>
+  </li>
+
+  <li>
+    <strong>Favorates count:</strong>
+    <%= @post.favorates_count %>
+  </li>
+
+  <li>
+    <strong>Suggested at:</strong>
+    <%= @post.suggested_at %>
+  </li>
+
+  <li>
+    <strong>Deleted at:</strong>
+    <%= @post.deleted_at %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: post_path(@conn, :edit, @post) %>
+<%= link "Back", to: post_path(@conn, :index) %>

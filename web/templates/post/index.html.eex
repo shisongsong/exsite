@@ -1,0 +1,48 @@
+<h2>Listing posts</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Title</th>
+      <th>Content</th>
+      <th>Content format</th>
+      <th>Last commented at</th>
+      <th>Last comment user</th>
+      <th>Topic</th>
+      <th>State</th>
+      <th>Commentes count</th>
+      <th>Favorates count</th>
+      <th>Suggested at</th>
+      <th>Deleted at</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for post <- @posts do %>
+    <tr>
+      <td><%= post.user_id %></td>
+      <td><%= post.title %></td>
+      <td><%= post.content %></td>
+      <td><%= post.content_format %></td>
+      <td><%= post.last_commented_at %></td>
+      <td><%= post.last_comment_user_id %></td>
+      <td><%= post.topic_id %></td>
+      <td><%= post.state %></td>
+      <td><%= post.commentes_count %></td>
+      <td><%= post.favorates_count %></td>
+      <td><%= post.suggested_at %></td>
+      <td><%= post.deleted_at %></td>
+
+      <td class="text-right">
+        <%= link "Show", to: post_path(@conn, :show, post), class: "btn btn-default btn-xs" %>
+        <%= link "Edit", to: post_path(@conn, :edit, post), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: post_path(@conn, :delete, post), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= link "New post", to: post_path(@conn, :new) %>
