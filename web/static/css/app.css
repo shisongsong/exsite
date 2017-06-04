@@ -1,1 +1,129 @@
 /* This file is for your main application css. */
+
+body {
+  margin-top: 0;
+}
+
+ul.media-list {
+}
+
+.navbar {
+  margin-bottom: 0;
+}
+
+.navbar-brand {
+  font-size: 28px;
+  color: #591270;
+  float: left;
+}
+
+a {
+  cursor: pointer;
+}
+
+a:hover {
+  color: #591270;
+}
+
+.topic-list .topic label {
+  text-align: right;
+  color: #aaa;
+  font-weight: normal;
+}
+
+.topic-list .topic label, .topic-list .topic .name {
+  width: 100px;
+  margin-bottom: 10px;
+  display: inline-block;
+}
+
+.topic-list .topic .name a {
+  color: #333;
+}
+
+.col-md-3 .panel .panel-block {
+  padding: 10px;
+}
+
+.btn.fullwidth {
+  width: 100%;
+}
+
+.topic-link {
+  background: #eee;
+  text-decoration: none;
+  padding: 4px;
+  border-radius: 5px;
+}
+
+.topic-link:hover {
+  background: #ddd;
+}
+
+.user-link ,
+.topic-link {
+  color: #591270;
+}
+
+.user-link {
+  font-weight: bold;
+}
+
+.topic-link:hover,
+.topic-link:active {
+  text-decoration: none;
+}
+
+.no-item {
+  color: #aaa;
+  padding: 10px;
+}
+
+.info>a {
+  margin-right: 5px;
+}
+
+.help-block {
+  color: red;
+}
+
+.CodeMirror {
+  min-height: 200px;
+  height: 200px;
+}
+
+.article {
+  padding: 10px;
+  border: 1px solid #eee;
+  background: #fafafa;
+}
+
+pre {
+  border: 0;
+  padding: 5px;
+  background-color: #fafafa;
+}
+
+.badge {
+  color: white;
+  background: #591270;
+}
+
+.badge:hover {
+  background: #7b3492;
+}
+
+.comments {
+  margin-top: 20px;
+}
+
+.comments .title {
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.media-list .media{
+  margin: 0;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee; 
+}

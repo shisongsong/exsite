@@ -6,72 +6,74 @@
   <% end %>
 
   <div class="form-group">
-    <%= label f, :title, class: "control-label" %>
-    <%= text_input f, :title, class: "form-control" %>
+    <div class="input-group">
+      <span class="input-group-btn">
+        <button class="btn btn-default selected-topic" type="button"
+          data-toggle="modal" data-target="#topic-selector">
+          <%=
+            if @post do
+              @post.topic.name
+            else
+              "选择节点"
+            end
+          %>
+        </button>
+      </span>
+      <%= hidden_input f, :topic_id %>
+      <%= text_input f, :title, placeholder: "输入标题",class: "form-control" %>
+    </div>
     <%= error_tag f, :title %>
   </div>
 
   <div class="form-group">
-    <%= label f, :content, class: "control-label" %>
-    <%= textarea f, :content, class: "form-control" %>
+    <%= textarea f, :content, class: "form-control", id: "editor" %>
     <%= error_tag f, :content %>
   </div>
 
   <div class="form-group">
-    <%= label f, :content_format, class: "control-label" %>
-    <%= text_input f, :content_format, class: "form-control" %>
-    <%= error_tag f, :content_format %>
-  </div>
-
-  <div class="form-group">
-    <%= label f, :last_commented_at, class: "control-label" %>
-    <%= datetime_select f, :last_commented_at, class: "form-control" %>
-    <%= error_tag f, :last_commented_at %>
-  </div>
-
-  <div class="form-group">
-    <%= label f, :last_comment_user_id, class: "control-label" %>
-    <%= number_input f, :last_comment_user_id, class: "form-control" %>
-    <%= error_tag f, :last_comment_user_id %>
-  </div>
-
-  <div class="form-group">
-    <%= label f, :topic_id, class: "control-label" %>
-    <%= number_input f, :topic_id, class: "form-control" %>
-    <%= error_tag f, :topic_id %>
-  </div>
-
-  <div class="form-group">
-    <%= label f, :state, class: "control-label" %>
-    <%= number_input f, :state, class: "form-control" %>
-    <%= error_tag f, :state %>
-  </div>
-
-  <div class="form-group">
-    <%= label f, :commentes_count, class: "control-label" %>
-    <%= number_input f, :commentes_count, class: "form-control" %>
-    <%= error_tag f, :commentes_count %>
-  </div>
-
-  <div class="form-group">
-    <%= label f, :favorates_count, class: "control-label" %>
-    <%= number_input f, :favorates_count, class: "form-control" %>
-    <%= error_tag f, :favorates_count %>
-  </div>
-
-  <div class="form-group">
-    <%= label f, :suggested_at, class: "control-label" %>
-    <%= datetime_select f, :suggested_at, class: "form-control" %>
-    <%= error_tag f, :suggested_at %>
-  </div>
-
-  <div class="form-group">
-    <%= label f, :deleted_at, class: "control-label" %>
-    <%= datetime_select f, :deleted_at, class: "form-control" %>
-    <%= error_tag f, :deleted_at %>
-  </div>
-
-  <div class="form-group">
-    <%= submit "Submit", class: "btn btn-primary" %>
+    <%= submit "发布", class: "btn btn-primary" %>
   </div>
 <% end %>
+
+<%= form_for @conn, image_path(@conn, :create),
+  [as: :upload,
+   multipart: true,
+   id: "upload-form"], fn f -> %>
+  <div class="form-group">
+    <%= file_input f, :file, class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= submit "提交", class: "btn btn-primary btn-xs" %>
+    <button id="upload-submit" class="btn btn-xs">提交</button>
+  </div>
+<% end %>
+
+<!-- modal 弹层 -->
+<div class="modal fade" id="topic-selector" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="myModalLabel">选择节点</h4>
+      </div>
+      <div class="modal-body">
+        <div class="topic-list">
+          <%= for topic  <- @root_topics do %>
+            <div class="media topic">
+              <div class="media-left">
+                <label><%= topic.name %></label>
+              </div>
+              <div class="media-body">
+                <%= for child <- topic.children do %>
+                  <span class="name" data-id="<%= child.id %>"><a><%= child.name %></a></span>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -3,7 +3,7 @@ defmodule Exsite.Bll.UserBll do
   alias Exsite.Dal.UserDal
 
   def get_all do
-    UserDal.get_all 
+    UserDal.get_all
   end
 
   def get_by_id(id) do

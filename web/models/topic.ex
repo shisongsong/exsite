@@ -4,7 +4,8 @@ defmodule Exsite.Topic do
   schema "topics" do
     field :name, :string
     field :position, :integer
-    belongs_to :topic, Exsite.Topic, foreign_key: :parent_topic_id
+    has_many :children, Exsite.Topic, foreign_key: :parent_topic_id
+    belongs_to :parent, Exsite.Topic, foreign_key: :parent_topic_id
     has_many :posts, Exsite.Post
 
     timestamps()
@@ -16,6 +17,7 @@ defmodule Exsite.Topic do
   def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, [:parent_topic_id, :name, :position])
-    |> validate_required([:parent_topic_id, :name, :position])
+    |> validate_required([:name, :position])
+    |> foreign_key_constraint(:parent_topic_id)
   end
 end

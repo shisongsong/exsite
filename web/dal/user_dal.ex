@@ -9,7 +9,7 @@ defmodule Exsite.Dal.UserDal do
   def get_by_id(id) do
     Repo.get(User, id)
   end
-  
+
   def get_by_nickname(nickname) do
     User
     |> where([u], like(u.nickname, ^"%#{nickname}%"))

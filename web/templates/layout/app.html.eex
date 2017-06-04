@@ -1,39 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Hello Exsite!</title>
-    <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
-  </head>
+  <!-- head 文件-->
+  <%= render "_head.html", conn: @conn %>
 
   <body>
-      <div class="header">
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <ul class="breadcrumb text-right">
-          <%= if @current_user do %>
-            <li><%= link @current_user.nickname, to: user_path(@conn, :show, @current_user) %></li>
-            <li><%= link "sign out", to: session_path(@conn, :delete, @current_user), method: "delete" %></li>
-          <% else %>
-            <li><%= link "sign in", to: session_path(@conn, :new) %></li>
-            <li><%= link "sign up", to: user_path(@conn, :new) %></li>
-          <% end %>
-        </ul>
-      </div><!-- /.container-fluid -->
+    <div class="header">
+      <div class="container">
+        <div class="navbar ">
+          <a href="/" class="navbar-brand"><b>Exsite</b></a>
+          <ul class="nav navbar-nav navbar-right">
+            <%= if @current_user do %>
+              <li><%= link @current_user.nickname, to: user_path(@conn, :show, @current_user) %></li>
+              <li>
+                <a id="logout" data-user-id="<%= @current_user.id %>" data-csrf-token="<%= get_csrf_token %>">
+                  退出
+                </a>
+              </li>
+            <% else %>
+              <li><%= link "登录", to: session_path(@conn, :new) %></li>
+              <li><%= link "注册", to: user_path(@conn, :new) %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div><!-- /.container-fluid -->
 
     <div class="container">
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
 
       <main role="main">
-        <%= render @view_module, @view_template, assigns %>
+        <div class="row">
+          <%= render @view_module, @view_template, assigns %>
+        </div>
       </main>
 
     </div> <!-- /container -->
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+    <span id="csrf-token" data-csrf-token="<%= get_csrf_token() %>"></span>
   </body>
 </html>

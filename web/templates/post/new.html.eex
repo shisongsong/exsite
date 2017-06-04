@@ -1,6 +1,9 @@
-<h2>New post</h2>
+<h2>发布话题</h2>
 
 <%= render "form.html", changeset: @changeset,
+                        post: nil,
+                        conn: @conn,
+                        root_topics: @root_topics,
                         action: post_path(@conn, :create) %>
 
 <%= link "Back", to: post_path(@conn, :index) %>

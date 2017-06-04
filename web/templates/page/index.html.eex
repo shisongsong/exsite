@@ -1,36 +1,21 @@
-<div class="jumbotron">
-  <h2><%= gettext "Welcome to %{name}", name: "Phoenix!" %></h2>
-  <p class="lead">A productive web framework that<br />does not compromise speed and maintainability.</p>
+<div class="col-md-9">
+  <ul class="nav nav-tabs">
+    <%= for topic <- @root_topics do %>
+      <li role="presentation" class=<%= if topic.id == @root_topic.id, do: "active" %>>
+        <%= link topic.name, to: page_path(@conn, :index, root_topic: topic.id) %>
+      </li>
+    <% end %>
+  </ul>
+  <ul class="nav nav-pills">
+    <%= for topic <- @children_topics do %>
+      <li role="presentation">
+        <%= link topic.name, to: topic_path(@conn, :show, topic) %>
+      </li>
+    <% end %>
+  </ul>
+  <%= render Exsite.SharedView, "_post_list.html", page: @page, conn: @conn %>
 </div>
 
-<div class="row marketing">
-  <div class="col-lg-6">
-    <h4>Resources</h4>
-    <ul>
-      <li>
-        <a href="http://phoenixframework.org/docs/overview">Guides</a>
-      </li>
-      <li>
-        <a href="https://hexdocs.pm/phoenix">Docs</a>
-      </li>
-      <li>
-        <a href="https://github.com/phoenixframework/phoenix">Source</a>
-      </li>
-    </ul>
-  </div>
-
-  <div class="col-lg-6">
-    <h4>Help</h4>
-    <ul>
-      <li>
-        <a href="http://groups.google.com/group/phoenix-talk">Mailing list</a>
-      </li>
-      <li>
-        <a href="http://webchat.freenode.net/?channels=elixir-lang">#elixir-lang on freenode IRC</a>
-      </li>
-      <li>
-        <a href="https://twitter.com/elixirphoenix">@elixirphoenix</a>
-      </li>
-    </ul>
-  </div>
+<div class="col-md-3">
+  <%= render Exsite.SharedView, "_new_post_button.html", conn: @conn, current_user: @current_user %>
 </div>

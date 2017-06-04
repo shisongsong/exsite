@@ -64,6 +64,11 @@ exports.config = {
   },
 
   npm: {
-    enabled: true
+    enabled: true,
+    styles: {
+      "simplemde": ["src/css/simplemde.css"],
+      "codemirror": ["lib/codemirror.css"],
+      "highlight.js": ["styles/default.css"]
+    }
   }
 };

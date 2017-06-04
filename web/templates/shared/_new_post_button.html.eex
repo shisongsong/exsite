@@ -1,0 +1,9 @@
+<%= if @current_user do %>
+  <div class="panel">
+    <div class="panel-block">
+      <%= link to:  post_path(@conn, :new) do %>
+        <button class="btn btn-primary fullwidth">发布话题</button>
+      <% end %>
+    </div>
+  </div>
+<% end %>

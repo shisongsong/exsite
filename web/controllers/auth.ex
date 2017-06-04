@@ -3,13 +3,14 @@ defmodule Exsite.Auth do
   import Plug.Conn
   import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0] 
   alias Exsite.Router.Helpers
+  require IEx
 
   def init(opts) do
     Keyword.fetch!(opts, :repo)
   end
 
   def call(conn, repo) do
-    user_id = get_session(conn,:user_id)
+    user_id = get_session(conn, :user_id)
     user = user_id && repo.get(Exsite.User, user_id)
     assign(conn, :current_user, user)
   end
@@ -33,9 +34,9 @@ defmodule Exsite.Auth do
   end
 
   # 使用用户名和密码登录
-  def login_by_nickname_and_pass(conn, nickname, given_pass, opts) do
+  def login_by_given_input_and_pass(conn, given_input, given_pass, opts) do
     repo = Keyword.fetch!(opts, :repo)
-    user = repo.get_by(Exsite.User, nickname: nickname)
+    user = repo.get_by(Exsite.User, nickname: given_input) || repo.get_by(Exsite.User, email: given_input)
     
     cond do
       user && checkpw(given_pass, user.encrypted_password) ->

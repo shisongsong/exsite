@@ -53,6 +53,8 @@ defmodule Exsite.Web do
       import Exsite.Router.Helpers
       import Exsite.ErrorHelpers
       import Exsite.Gettext
+      import Scrivener.HTML
+      import Exsite.Helpers.TimeHelper
     end
   end
 

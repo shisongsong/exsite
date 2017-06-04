@@ -1,12 +1,13 @@
 defmodule Exsite.SessionController do
   use Exsite.Web, :controller
+  require IEx
 
   def new(conn, _) do
     render conn, "new.html"
   end
 
-  def create(conn, %{"session" => %{"nickname" => nickname, "password" => password}}) do
-    case Exsite.Auth.login_by_nickname_and_pass(conn, nickname, password, repo: Repo) do
+  def create(conn, %{"session" => %{"given_input" => given_input, "password" => password}}) do
+    case Exsite.Auth.login_by_given_input_and_pass(conn, given_input, password, repo: Repo) do
       {:ok, conn} ->
         conn
         |> put_flash(:info, "Welcome back!")
@@ -21,6 +22,6 @@ defmodule Exsite.SessionController do
   def delete(conn, _) do
     conn
     |> Exsite.Auth.logout()
-    |> redirect(to: page_path(conn, :index))
+    |> send_resp(200, "")
   end
 end

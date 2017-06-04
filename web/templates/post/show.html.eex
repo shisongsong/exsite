@@ -1,68 +1,88 @@
-<h2>Show post</h2>
+<div class="col-md-9">
+  <h2><%= @post.title %></h2>
+  <div>
+    <small class="info">
+      <%= link @post.topic.name, to: topic_path(@conn, :show, @post.topic), class: "topic-link" %>
+      <%= link @post.user.nickname, to: user_path(@conn, :show, @post.user), class: "user-link" %>
+      <%= time_formatter @post.inserted_at %>
+    </small>
+  </div>
+  <hr>
+  <article class="article">
+    <%= raw Earmark.as_html!(@post.content) %>
+  </article>
+  <hr>
 
-<ul>
+  <div>
+    <button type="button" class="btn btn-default btn-sm">收藏</button>
+    <button type="button" class="btn btn-default btn-sm">举报</button>
+  </div>
 
-  <li>
-    <strong>User:</strong>
-    <%= @post.user_id %>
-  </li>
+  <div class="comments">
+    <%= if length(@post.comments) > 0 do %>
+      <h4 class="title">评论</h4>
+      <ul class="media-list">
+        <%= for comment <- @post.comments do %>
+          <li class="media">
+            <div class="media-left">
+              <% link to: user_path(@conn, :show, comment.user) do %>
+                <img class="" src="images/phoenix.png" alt="avatar">
+              <% end %>
+            </div>
 
-  <li>
-    <strong>Title:</strong>
-    <%= @post.title %>
-  </li>
+            <div class="media-body">
+              <small class="info">
+                <a class="topic-link" href="#<%= comment.floor_number %>" name="<%= comment.floor_number %>">
+                  <b><%= comment.floor_number %>楼</b>
+                </a>
+                <%= link comment.user.nickname, to: user_path(@conn, :show, comment.user), class: "user-link" %>
+                <%= time_formatter comment.inserted_at %>
+              </small>
+              <article>
+                <%= raw Earmark.as_html!(comment.content) %> 
+              </article>
+            </div>
 
-  <li>
-    <strong>Content:</strong>
-    <%= @post.content %>
-  </li>
+            <div class="media-right media-top">
+              <a>赞</a>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+      <hr>
+    <% else %>
+      <div class="no-item">QAQ 好无聊~ 还没有人来评论~</div>
+    <% end %>
 
-  <li>
-    <strong>Content format:</strong>
-    <%= @post.content_format %>
-  </li>
+    <%= if @current_user do %>
+      <%= form_for @changeset, post_comment_path(@conn, :create, @post.id), fn f -> %>
+        <%= if @changeset.action do %>
+          <div class="alert alert-danger">
+            <p>Oops, something went wrong! Please check the errors below.</p>
+          </div>
+        <% end %>
+        <div class="form-group">
+          <%= textarea f, :content, class: "form-control", id: "editor" %>
+          <%= error_tag f, :content %>
+        </div>
 
-  <li>
-    <strong>Last commented at:</strong>
-    <%= @post.last_commented_at %>
-  </li>
+        <div class="form-group">
+          <%= submit "评论", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    <% else %>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        需要
+        <%= link "登录", to: session_path(@conn, :new), class: "btn btn-primary btn-xs" %>
+        后才能评论，如果还没有账号，请进行
+        <%= link "注册", to: user_path(@conn, :new), class: "btn btn-danger btn-xs" %>
+        。
+      </div>
+    </div>
+  <% end %>
+  </div>
+</div>
 
-  <li>
-    <strong>Last comment user:</strong>
-    <%= @post.last_comment_user_id %>
-  </li>
-
-  <li>
-    <strong>Topic:</strong>
-    <%= @post.topic_id %>
-  </li>
-
-  <li>
-    <strong>State:</strong>
-    <%= @post.state %>
-  </li>
-
-  <li>
-    <strong>Commentes count:</strong>
-    <%= @post.commentes_count %>
-  </li>
-
-  <li>
-    <strong>Favorates count:</strong>
-    <%= @post.favorates_count %>
-  </li>
-
-  <li>
-    <strong>Suggested at:</strong>
-    <%= @post.suggested_at %>
-  </li>
-
-  <li>
-    <strong>Deleted at:</strong>
-    <%= @post.deleted_at %>
-  </li>
-
-</ul>
-
-<%= link "Edit", to: post_path(@conn, :edit, @post) %>
-<%= link "Back", to: post_path(@conn, :index) %>
+<div class="col-md-3">
+</div>

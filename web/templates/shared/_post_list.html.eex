@@ -1,0 +1,28 @@
+<ul class="media-list">
+  <%= for post <- @page.entries do %>
+    <li class="media">
+      <div class="media-left media-top">
+        <% link to: user_path(@conn, :show, post.user) do %>
+          <img class="" alt="avatar">
+        <% end %>
+      </div>
+      <div class="media-body">
+        <h4 class="media-heading"><%= link post.title, to: post_path(@conn, :show, post) %></h4>
+        <div>
+          <small class="info">
+            <%= link post.topic.name, to: topic_path(@conn, :show, post.topic_id), class: "topic-link" %>
+            <%= link post.user.nickname, to: user_path(@conn, :show, post.user_id), class: "user-link" %>
+            <%= time_formatter post.inserted_at %>
+          </small>
+        </div>
+      </div>
+      <div class="media-right media-middle">
+        <%= link to: post_path(@conn, :show, post) do %>
+          <div class="badge"><%= post.commentes_count %></div>
+        <% end %>
+      </div>
+    </li>
+  <% end %>
+</ul>
+
+<%= if @page.total_pages > 1, do: pagination_links @page %>
