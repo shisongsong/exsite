@@ -38,13 +38,10 @@
 <%= form_for @conn, image_path(@conn, :create),
   [as: :upload,
    multipart: true,
-   id: "upload-form"], fn f -> %>
+   id: "upload-form",
+   name: "upload"], fn f -> %>
   <div class="form-group">
-    <%= file_input f, :file, class: "form-control" %>
-  </div>
-  <div class="form-group">
-    <%= submit "提交", class: "btn btn-primary btn-xs" %>
-    <button id="upload-submit" class="btn btn-xs">提交</button>
+    <%= file_input f, :file, class: "form-control", id: "upload-input" %>
   </div>
 <% end %>
 

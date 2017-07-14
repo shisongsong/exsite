@@ -7,12 +7,19 @@ defmodule Exsite.ImageController do
    filename = generate_filename(upload["file"])
     case Exsite.Uploader.upload(upload["file"].path, filename) do
       {:ok, url} ->
-        conn |> send_resp(200, url)
+        conn
+        |> put_status(200)
+        |> json(%{url: url})
       {:error, reason} ->
         conn
         |> put_status(400)
         |> json(%{error: reason})
     end
+  end
+
+  def delete(conn, %{"url" => url}) do
+    res = Qiniu.Resource.delete(url)
+    IEx.pry
   end
 
   defp generate_filename(file) do
