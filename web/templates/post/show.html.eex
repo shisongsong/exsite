@@ -49,7 +49,6 @@
           </li>
         <% end %>
       </ul>
-      <hr>
     <% else %>
       <div class="no-item">QAQ 好无聊~ 还没有人来评论~</div>
     <% end %>
