@@ -1,10 +1,11 @@
 /* This file is for your main application css. */
-
 body {
   margin-top: 0;
 }
 
-ul.media-list {
+ul.media-list,
+ul.list-group {
+  margin-top: 0;
 }
 
 .navbar {
@@ -135,4 +136,13 @@ img {
 
 article {
   margin-top: 10px;
+}
+
+.list-group-item {
+  padding: 0;
+}
+
+.list-group-item a {
+  padding: 10px;
+  display: block;
 }

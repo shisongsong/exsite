@@ -11,4 +11,5 @@
 
 <div class="col-md-3">
   <%= render Exsite.SharedView, "_new_post_button.html", conn: @conn, current_user: @current_user %>
+  <%= render Exsite.SharedView, "_side_bar_links.html" %>
 </div>
