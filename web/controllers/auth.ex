@@ -37,7 +37,7 @@ defmodule Exsite.Auth do
   def login_by_given_input_and_pass(conn, given_input, given_pass, opts) do
     repo = Keyword.fetch!(opts, :repo)
     user = repo.get_by(Exsite.User, nickname: given_input) || repo.get_by(Exsite.User, email: given_input)
-    
+
     cond do
       user && checkpw(given_pass, user.encrypted_password) ->
         {:ok, login(conn, user)}

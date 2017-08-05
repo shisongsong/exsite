@@ -35,12 +35,36 @@
                 <a class="topic-link" href="#<%= comment.floor_number %>" name="<%= comment.floor_number %>">
                   <b><%= comment.floor_number %>楼</b>
                 </a>
-                <%= link comment.user.nickname, to: user_path(@conn, :show, comment.user), class: "user-link" %>
+                <%= link comment.user.nickname,
+                    to: user_path(@conn, :show, comment.user),
+                    class: "user-link" %>
                 <%= time_formatter comment.inserted_at %>
               </small>
               <article>
                 <%= raw Earmark.as_html!(comment.content) %> 
               </article>
+
+              <%= if length(comment.replies) > 0 do %>
+                <ul class="media-list">
+                  <%= for reply <- comment.replies do %>
+                    <li class="media">
+                      <div class="media-body">
+                        <%= link reply.user.nickname,
+                            to: user_path(@conn, :show, reply.user),
+                            class: "user-link"
+                        %>
+                        <%= if reply.reply_id do %>回复
+                          <%= link reply.reply.user.nickname,
+                              to: user_path(@conn, :show, reply.reply.user),
+                              class: "user-link"
+                          %>
+                        <% end %>:
+                        <%= raw Earmark.as_html!(reply.content) %>
+                      </div>
+                    </li>
+                  <% end %>
+                </ul>
+              <% end %>
             </div>
 
             <div class="media-right media-top">

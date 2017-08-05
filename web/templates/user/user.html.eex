@@ -1,1 +1,8 @@
-<b><%= @user.nickname %></b>(<%= @user.id %>)
+<b><%= @user.nickname %></b>
+
+<div class="col-md-3">
+  <%= render Exsite.SharedView, "", conn: @conn %>
+</div>
+
+<div class="col-md-9">
+</div>

@@ -37,7 +37,10 @@ defmodule Exsite.User do
   def generate_encrypted_password current_changeset do
     case current_changeset do
       %Ecto.Changeset{valid?: true, changes: %{password: password}} ->
-        put_change(current_changeset, :encrypted_password, Comeonin.Bcrypt.hashpwsalt(password))
+        put_change(
+          current_changeset,
+          :encrypted_password,
+          Comeonin.Bcrypt.hashpwsalt(password))
 
       _ ->
         current_changeset

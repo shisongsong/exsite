@@ -7,12 +7,6 @@ defmodule Exsite.Dal.PostDal do
     Repo.all(Post)
   end
 
-  def get_all(deleted) do
-    Post
-    |> where([p], p.deleted_at)
-    |> Repo.all()
-  end
-
   def get_by_id(id) do
     Post
     |> preload([:topic, :user, :comments, comments: :user])

@@ -6,8 +6,9 @@ defmodule Exsite.PostController do
   plug :authenticate_user when action in [:new, :create]
 
   def index(conn, _params) do
+    posts = Post |> Repo.all
     conn
-    |> assign(:posts, PostBll.get_all)
+    |> assign(:posts, posts)
     |> render("index.html")
   end
 

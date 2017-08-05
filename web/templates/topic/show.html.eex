@@ -1,9 +1,17 @@
 <div class="col-md-9">
   <ol class="breadcrumb">
     <%= if @topic.parent do %>
-      <li><%= link @topic.parent.name, to: page_path(@conn, :index, root_topic: @topic.parent_topic_id) %></li>
+      <li>
+        <%= link @topic.parent.name,
+            to: page_path(
+                  @conn, :index,
+                  root_topic: @topic.parent_topic_id)
+        %>
+      </li>
     <% end %>
-    <li class="active"><%= @topic.name %></li>
+    <li class="active">
+      <%= @topic.name %>
+    </li>
   </ol>
 
   <%= render Exsite.SharedView, "_post_list.html", page: @page, conn: @conn %>
