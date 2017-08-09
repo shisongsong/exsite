@@ -28,9 +28,13 @@ defmodule Exsite.Router do
     get "/", PageController, :index
     resources "/users", UserController, only: [:index, :show, :new, :create]
     resources "/sessions", SessionController, only: [:new, :create]
-    resources "/topics", TopicController 
+    resources "/topics", TopicController
     resources "/posts", PostController do
-      resources "/comments", CommentController, only: [:new, :create, :eidt, :update]
+      resources "/comments", CommentController,
+        only: [:create, :update] do
+          resources "/replies", ReplyController, name: "reply",
+            only: [:create, :update]
+      end
     end
   end
 

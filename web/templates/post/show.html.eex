@@ -2,8 +2,12 @@
   <h2><%= @post.title %></h2>
   <div>
     <small class="info">
-      <%= link @post.topic.name, to: topic_path(@conn, :show, @post.topic), class: "topic-link" %>
-      <%= link @post.user.nickname, to: user_path(@conn, :show, @post.user), class: "user-link" %>
+      <%= link @post.topic.name,
+            to: topic_path(@conn, :show, @post.topic),
+            class: "topic-link" %>
+      <%= link @post.user.nickname,
+            to: user_path(@conn, :show, @post.user),
+            class: "user-link" %>
       <%= time_formatter @post.inserted_at %>
     </small>
   </div>
@@ -32,7 +36,8 @@
 
             <div class="media-body">
               <small class="info">
-                <a class="topic-link" href="#<%= comment.floor_number %>" name="<%= comment.floor_number %>">
+                <a class="topic-link" href="#<%= comment.floor_number %>"
+                    name="<%= comment.floor_number %>">
                   <b><%= comment.floor_number %>楼</b>
                 </a>
                 <%= link comment.user.nickname,
@@ -65,6 +70,16 @@
                   <% end %>
                 </ul>
               <% end %>
+
+              <div class="">
+                <a>reply</a>
+                <a>like</a>
+                <a>dislike</a>
+                <a>complaint</a>
+              </div>
+              <%= form_for Reply.changeset(%Reply{}),
+                    post_comment_path(@conn, :create, comment.id), fn f -> %>
+              <% end %>
             </div>
 
             <div class="media-right media-top">
@@ -78,10 +93,11 @@
     <% end %>
 
     <%= if @current_user do %>
-      <%= form_for @changeset, post_comment_path(@conn, :create, @post.id), fn f -> %>
+      <%= form_for @changeset,
+            post_comment_path(@conn, :create, @post.id), fn f -> %>
         <%= if @changeset.action do %>
           <div class="alert alert-danger">
-            <p>Oops, something went wrong! Please check the errors below.</p>
+            <p>Oops, something went wrong!Please check the errors below.</p>
           </div>
         <% end %>
         <div class="form-group">
@@ -97,10 +113,11 @@
     <div class="panel panel-default">
       <div class="panel-body">
         需要
-        <%= link "登录", to: session_path(@conn, :new), class: "btn btn-primary btn-xs" %>
+        <%= link "登录", to: session_path(@conn, :new),
+              class: "btn btn-primary btn-xs" %>
         后才能评论，如果还没有账号，请进行
-        <%= link "注册", to: user_path(@conn, :new), class: "btn btn-danger btn-xs" %>
-        。
+        <%= link "注册", to: user_path(@conn, :new),
+              class: "btn btn-danger btn-xs" %>。
       </div>
     </div>
   <% end %>

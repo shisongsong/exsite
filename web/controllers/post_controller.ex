@@ -38,7 +38,11 @@ defmodule Exsite.PostController do
   end
 
   def show(conn, %{"id" => id}) do
-    post = PostBll.get_by_id(id)
+    post = 
+      Post
+      |> preload([:topic, :user, :comments, comments: [
+          :user, :replies, replies: [:user, :reply, reply: :user]]])
+      |> Repo.get(id)
     changeset = Comment.changeset(%Comment{})
     render conn, "show.html", post: post, changeset: changeset
   end
