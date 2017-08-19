@@ -20,6 +20,7 @@ defmodule Exsite.Router do
     pipe_through :api
     delete "/sessions/:user_id", SessionController, :delete
     post "/images", ImageController, :create
+    post "/comments/:comment_id/replies", ReplyController, :create, as: :comment_reply
   end
 
   scope "/", Exsite do
@@ -30,12 +31,9 @@ defmodule Exsite.Router do
     resources "/sessions", SessionController, only: [:new, :create]
     resources "/topics", TopicController
     resources "/posts", PostController do
-      resources "/comments", CommentController,
-        only: [:create, :update] do
-          resources "/replies", ReplyController, name: "reply",
-            only: [:create, :update]
-      end
+      resources "/comments", CommentController, only: [:create, :update]
     end
+
   end
 
   # Other scopes may use custom stacks.

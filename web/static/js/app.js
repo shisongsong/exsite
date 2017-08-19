@@ -132,3 +132,27 @@ function _replaceSelection(cm, active, startEnd, url) {
   cm.setSelection(startPoint, endPoint);
   cm.focus();
 }
+
+$("#reply").bind({
+  click: function() {
+    var replyForm = $("#reply_editor");
+    replyForm.toggle();
+  }
+})
+
+$("#reply_submit").bind({
+  click: function() {
+    var form = $(this).closest("form");
+    $.ajax({
+      url: form.data("action"),
+      data: {
+        _csrf_token: getCsrfToken()
+      },
+      method: "POST",
+      success: function(data) {
+        console.log(date);
+      }
+    })
+  }
+})
+

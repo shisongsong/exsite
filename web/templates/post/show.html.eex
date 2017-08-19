@@ -72,14 +72,19 @@
               <% end %>
 
               <div class="">
-                <a>reply</a>
+                <a id="reply">reply</a>
                 <a>like</a>
                 <a>dislike</a>
                 <a>complaint</a>
               </div>
-              <%= form_for Reply.changeset(%Reply{}),
-                    post_comment_path(@conn, :create, comment.id), fn f -> %>
-              <% end %>
+              <form data-action="<%= comment_reply_path(@conn, :create, comment.id)%>" method="POST">
+                <div class="form-group">
+                  <textarea name="reply[content]" class="formm-control"></textarea>
+                </div>
+                <div class="form-group">
+                  <button class="btn btn-primary" id="reply_submit"></button>
+                </div>
+              </form>
             </div>
 
             <div class="media-right media-top">
