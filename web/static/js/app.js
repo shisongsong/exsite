@@ -38,24 +38,27 @@ $("#topic-selector .topic-list .name a").bind({
 })
 
 // 编辑器
-var simplemde;
-if($("#editor")[0]) {
-  simplemde = new SimpleMDE({
-    element: $("#editor")[0],
-    lineWrapping: false,
-    parsingConfig: {
-      allowAtxHeaderWithoutSpace: true,
-      strikethrough: false,
-      underscoresBreakWords: true,
-    },
-    renderingConfig: {
-      singleLineBreaks: false,
-      codeSyntaxHighlighting: true,
-    },
-    showIcons: ["code", "table"],
-    spellChecker: false,
-    status: false
-  })
+var s = $(".simplemde");
+console.log(s)
+if(s.length > 0){
+  for(var i = 0; i < s.length; i++){
+    var simplemde = new SimpleMDE({
+      element: $(".simplemde")[i],
+      lineWrapping: false,
+      parsingConfig: {
+        allowAtxHeaderWithoutSpace: true,
+        strikethrough: false,
+        underscoresBreakWords: true,
+      },
+      renderingConfig: {
+        singleLineBreaks: false,
+        codeSyntaxHighlighting: true,
+      },
+      showIcons: ["code", "table"],
+      spellChecker: false,
+      status: false
+    })
+  }
 }
 
 // 退出登录
@@ -79,17 +82,22 @@ $("#upload-input").bind({
   change: function(e) {
     var file = e.target.files[0] || e.dataTransfer.files[0];
     var data = new FormData;
-    data.append("upload[file]", file);
-    $.post({
-      url: "/api/images",
-      data: data,
-      contentType: false,
-      processData: false
-    }).done(function(data) {
-      drawImageWithUrl(simplemde, data.url);
-    }).fail(function(data) {
-      console.log(data);
-    })
+    var simplemde = $(this).closest("");
+    console.log($(this));
+    console.log(simplemde);
+    if($.inArray(simplemde, s) > 0){
+      data.append("upload[file]", file);
+      $.post({
+        url: "/api/images",
+        data: data,
+        contentType: false,
+        processData: false
+      }).done(function(data) {
+        drawImageWithUrl(simplemde, data.url);
+      }).fail(function(data) {
+        console.log(data);
+      })
+    }
   }
 })
 

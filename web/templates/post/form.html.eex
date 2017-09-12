@@ -26,8 +26,22 @@
   </div>
 
   <div class="form-group">
-    <%= textarea f, :content, class: "form-control", id: "editor" %>
+    <%= textarea f, :content, class: "form-control simplemde" %>
     <%= error_tag f, :content %>
+  </div>
+
+  <div>
+    <%= form_for @conn, image_path(@conn, :create),
+      [as: :upload,
+       multipart: true,
+       id: "upload-form",
+       name: "upload"], fn f -> %>
+      <div class="form-group">
+        <%= file_input f, :file,\
+            class: "form-control",
+            id: "upload-input" %>
+      </div>
+    <% end %>
   </div>
 
   <div class="form-group">
@@ -35,15 +49,6 @@
   </div>
 <% end %>
 
-<%= form_for @conn, image_path(@conn, :create),
-  [as: :upload,
-   multipart: true,
-   id: "upload-form",
-   name: "upload"], fn f -> %>
-  <div class="form-group">
-    <%= file_input f, :file, class: "form-control", id: "upload-input" %>
-  </div>
-<% end %>
 
 <!-- modal 弹层 -->
 <div class="modal fade" id="topic-selector" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

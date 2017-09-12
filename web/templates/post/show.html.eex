@@ -77,12 +77,19 @@
                 <a>dislike</a>
                 <a>complaint</a>
               </div>
-              <form data-action="<%= comment_reply_path(@conn, :create, comment.id)%>" method="POST">
+              <form id="reply_editor"
+                    data-action="<%= comment_reply_path(@conn,
+                      :create, comment.id) %>"
+                    method="POST">
                 <div class="form-group">
-                  <textarea name="reply[content]" class="formm-control"></textarea>
+                  <textarea name="reply[content]"
+                            class="formm-control simplemde">
+                  </textarea>
                 </div>
                 <div class="form-group">
-                  <button class="btn btn-primary" id="reply_submit"></button>
+                  <button class="btn btn-primary"
+                          id="reply_submit">Reply
+                  </button>
                 </div>
               </form>
             </div>
@@ -106,7 +113,7 @@
           </div>
         <% end %>
         <div class="form-group">
-          <%= textarea f, :content, class: "form-control", id: "editor" %>
+          <%= textarea f, :content, class: "form-control simplemde" %>
           <%= error_tag f, :content %>
         </div>
 
