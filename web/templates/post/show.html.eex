@@ -18,8 +18,13 @@
   <hr>
 
   <div>
-    <button type="button" class="btn btn-default btn-sm">收藏</button>
-    <button type="button" class="btn btn-default btn-sm">举报</button>
+    <a type="button" class="btn btn-default btn-sm">收藏</button>
+    <a type="button" class="btn btn-default btn-sm">举报</button>
+    <%= if @post.user_id == @current_user.id do %>
+      <%= link "编辑",
+            to: post_path(@conn, :edit, @post),
+            class: "btn btn-default btn-sm" %>
+    <% end %>
   </div>
 
   <div class="comments">

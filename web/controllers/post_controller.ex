@@ -33,7 +33,9 @@ defmodule Exsite.PostController do
         |> redirect(to: post_path(conn, :show, post))
 
       {:error, changeset} ->
-        render(conn, "new.html", changeset: changeset, root_topics: TopicBll.root_topics)
+        render(conn, "new.html",
+          changeset: changeset,
+          root_topics: TopicBll.root_topics)
     end
   end
 
@@ -60,5 +62,29 @@ defmodule Exsite.PostController do
     |> assign(:changeset, changeset)
     |> assign(:root_topics, root_topics)
     |> render("edit.html")
+  end
+
+  def update(conn, %{"id" => id, "post" => post_params}) do
+    post = 
+      Post
+      |> Repo.get(id)
+
+    IEx.pry
+    changeset = 
+      post
+      |> Post.changeset(post_params)
+      
+    case Repo.update(changeset) do
+      {:ok, post} ->
+        conn
+        |> put_flash(:info, "post update")
+        |> redirect(to: post_path(conn, :show, post))
+
+      {:error, changeset} ->
+        render(conn, "edit.html",
+          post: post,
+          changeset: changeset,
+          root_topics: TopicBll.root_topics)
+    end
   end
 end
