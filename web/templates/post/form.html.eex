@@ -45,7 +45,7 @@
     id: "upload-form",
     name: "upload"], fn f -> %>
    <div class="form-group">
-     <%= file_input f, :file,\
+     <%= file_input f, :file,
          class: "form-control",
          id: "upload-input" %>
    </div>
