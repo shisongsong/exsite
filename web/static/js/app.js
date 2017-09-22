@@ -37,28 +37,25 @@ $("#topic-selector .topic-list .name a").bind({
   }
 })
 
+var simplemde;
 // 编辑器
-var s = $(".simplemde");
-console.log(s)
-if(s.length > 0){
-  for(var i = 0; i < s.length; i++){
-    var simplemde = new SimpleMDE({
-      element: $(".simplemde")[i],
-      lineWrapping: false,
-      parsingConfig: {
-        allowAtxHeaderWithoutSpace: true,
-        strikethrough: false,
-        underscoresBreakWords: true,
-      },
-      renderingConfig: {
-        singleLineBreaks: false,
-        codeSyntaxHighlighting: true,
-      },
-      showIcons: ["code", "table"],
-      spellChecker: false,
-      status: false
-    })
-  }
+if($(".simplemde")[0]){
+  simplemde = new SimpleMDE({
+    element: $(".simplemde")[0],
+    lineWrapping: false,
+    parsingConfig: {
+      allowAtxHeaderWithoutSpace: true,
+      strikethrough: false,
+      underscoresBreakWords: true,
+    },
+    renderingConfig: {
+      singleLineBreaks: false,
+      codeSyntaxHighlighting: true,
+    },
+    showIcons: ["code", "table"],
+    spellChecker: false,
+    status: false
+  })
 }
 
 // 退出登录
@@ -78,26 +75,21 @@ $("#logout").bind({
 })
 
 
-$("#upload-input").bind({
+$(".file-input").bind({
   change: function(e) {
     var file = e.target.files[0] || e.dataTransfer.files[0];
     var data = new FormData;
-    var simplemde = $(this).closest("");
-    console.log($(this));
-    console.log(simplemde);
-    if($.inArray(simplemde, s) > 0){
-      data.append("upload[file]", file);
-      $.post({
-        url: "/api/images",
-        data: data,
-        contentType: false,
-        processData: false
-      }).done(function(data) {
-        drawImageWithUrl(simplemde, data.url);
-      }).fail(function(data) {
-        console.log(data);
-      })
-    }
+    data.append("upload[file]", file);
+    $.post({
+      url: "/api/images",
+      data: data,
+      contentType: false,
+      processData: false
+    }).done(function(data) {
+      drawImageWithUrl(simplemde, data.url);
+    }).fail(function(data) {
+      console.log(data);
+    })
   }
 })
 

@@ -123,7 +123,20 @@
         </div>
 
         <div class="form-group">
+          <label for="file" class="btn btn-default">上传</label>
           <%= submit "评论", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+
+      <%= form_for @conn, image_path(@conn, :create),
+        [as: :upload,
+         multipart: true,
+         id: "upload-form",
+         name: "upload"], fn f -> %>
+        <div class="form-group">
+          <%= file_input f, :file,
+             id: "file",
+             class: "form-control file-input" %>
         </div>
       <% end %>
     <% else %>

@@ -31,6 +31,7 @@
   </div>
 
   <div class="form-group">
+    <label for="file" class="btn btn-default">上传</label>
     <%= if is_nil @post do %>
       <%= submit "发布", class: "btn btn-primary" %>
     <% else %>
@@ -46,8 +47,8 @@
     name: "upload"], fn f -> %>
    <div class="form-group">
      <%= file_input f, :file,
-         class: "form-control",
-         id: "upload-input" %>
+        id: "file",
+        class: "form-control file-input" %>
    </div>
  <% end %>
 
