@@ -1,14 +1,19 @@
 defmodule Exsite.ReplyController do
+  require IEx
+
   use Exsite.Web, :controller
 
   alias Exsite.Router.Helpers
   alias Exsite.{Reply, Comment, Post}
   plug :authenticate_user
 
+  # reply_id
+  #   the id of replied reply 
   def create(conn, %{"comment_id" => comment_id,
     "reply_id" => reply_id, "reply" => reply}) do
-      reply = %{"reply_id" => reply_id}
-
+      reply = 
+        reply
+        |> Map.merge(%{"reply_id" => reply_id})
       create(conn, %{"comment_id" => comment_id, "reply" => reply})
   end
 
@@ -24,6 +29,7 @@ defmodule Exsite.ReplyController do
 
     post = comment.post
 
+    IEx.pry
     reply =
       reply
       |> Map.merge(%{"user_id" => user_id, "comment_id" => comment_id,

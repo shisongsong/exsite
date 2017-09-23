@@ -133,20 +133,23 @@ function _replaceSelection(cm, active, startEnd, url) {
   cm.focus();
 }
 
-$("#reply").bind({
+// Toggle reply form 
+$(".reply-link").bind({
   click: function() {
-    var replyForm = $("#reply_editor");
+    var replyForm = $(this).closest("div").next("form");
     replyForm.toggle();
   }
 })
 
-$("#reply_submit").bind({
+// submit reply
+$(".reply-submit").bind({
   click: function() {
     var form = $(this).closest("form");
     $.ajax({
-      url: form.data("action"),
+      url: form.action,
       data: {
-        _csrf_token: getCsrfToken()
+        _csrf_token: getCsrfToken(),
+
       },
       method: "POST",
       success: function(data) {

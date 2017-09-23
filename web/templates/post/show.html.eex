@@ -77,24 +77,22 @@
               <% end %>
 
               <div class="">
-                <a id="reply">reply</a>
+                <a class="reply-link">reply</a>
                 <a>like</a>
                 <a>dislike</a>
                 <a>complaint</a>
               </div>
-              <form id="reply_editor"
-                    data-action="<%= comment_reply_path(@conn,
+              <form action="<%= comment_reply_path(@conn,
                       :create, comment.id) %>"
                     method="POST">
                 <div class="form-group">
                   <textarea name="reply[content]"
-                            class="formm-control simplemde">
+                            class="form-control">
                   </textarea>
                 </div>
                 <div class="form-group">
-                  <button class="btn btn-primary"
-                          id="reply_submit">Reply
-                  </button>
+                  <button class="btn btn-primary reply-submit"
+                    data-action="<%= comment_reply_path(@conn, :create, comment.id) %>">Reply</button>
                 </div>
               </form>
             </div>
