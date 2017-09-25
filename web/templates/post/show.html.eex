@@ -82,9 +82,7 @@
                 <a>dislike</a>
                 <a>complaint</a>
               </div>
-              <form action="<%= comment_reply_path(@conn,
-                      :create, comment.id) %>"
-                    method="POST">
+              <form>
                 <div class="form-group">
                   <textarea name="reply[content]"
                             class="form-control">

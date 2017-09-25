@@ -24,8 +24,7 @@ defmodule Exsite.Reply do
   @required_fields [
     :content,
     :user_id,
-    :comment_id,
-    :reply_id]
+    :comment_id]
 
   @cast_fields @required_fields ++ [
     :content_format,

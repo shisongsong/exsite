@@ -2,16 +2,13 @@ defmodule Exsite.ReplyController do
   require IEx
 
   use Exsite.Web, :controller
-
-  alias Exsite.Router.Helpers
   alias Exsite.{Reply, Comment, Post}
-  plug :authenticate_user
 
   # reply_id
-  #   the id of replied reply 
+  #   被回复的reply的id
   def create(conn, %{"comment_id" => comment_id,
     "reply_id" => reply_id, "reply" => reply}) do
-      reply = 
+      reply =
         reply
         |> Map.merge(%{"reply_id" => reply_id})
       create(conn, %{"comment_id" => comment_id, "reply" => reply})
@@ -29,7 +26,6 @@ defmodule Exsite.ReplyController do
 
     post = comment.post
 
-    IEx.pry
     reply =
       reply
       |> Map.merge(%{"user_id" => user_id, "comment_id" => comment_id,
@@ -43,7 +39,7 @@ defmodule Exsite.ReplyController do
           |> Post.changeset(%{last_commented_at: reply.inserted_at})
           |> Repo.update
 
-        conn |> json(%{post: post, reply: reply, comment: comment})
+        conn |> render("show_reply.json", reply: reply)
       {:error, changeset} ->
         conn |> json(%{changeset: changeset})
     end

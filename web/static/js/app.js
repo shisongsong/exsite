@@ -145,17 +145,15 @@ $(".reply-link").bind({
 $(".reply-submit").bind({
   click: function() {
     var form = $(this).closest("form");
-    $.ajax({
-      url: form.action,
+    $.post({
+      url: $(this).data("action"),
       data: {
         _csrf_token: getCsrfToken(),
+      }}).done(function(data){
+        console.log(data);
+        alert("aa")
+      }).fail(function(data){
 
-      },
-      method: "POST",
-      success: function(data) {
-        console.log(date);
-      }
-    })
+      });
   }
 })
-
