@@ -39,9 +39,11 @@ defmodule Exsite.ReplyController do
           |> Post.changeset(%{last_commented_at: reply.inserted_at})
           |> Repo.update
 
+        IEx.pry
         conn |> render("show_reply.json", reply: reply)
       {:error, changeset} ->
-        conn |> json(%{changeset: changeset})
+        IEx.pry
+        conn |> json(%{messge: "message"})
     end
   end
 end
