@@ -146,15 +146,22 @@ $(".reply-submit").bind({
   click: function() {
     var form = $(this).closest("form");
     console.log(form.data);
-    $.post({
+    $.ajax({
+      method: "POST",
+      dataType: "json",
       url: $(this).data("action"),
       data: {
-        _csrf_token: getCsrfToken()
-      }}).done(function(data){
-        console.log(data);
-        alert("aa")
-      }).fail(function(data){
+        _csrf_token: getCsrfToken(),
+        reply: {
+          content: form.find("textarea").val()
+        }
+      },
+      success: function(data) {
         console.log(data)
-      });
+      },
+      error: function(result) {
+        console.log(result)
+      }
+    });
   }
 })

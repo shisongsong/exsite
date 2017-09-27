@@ -14,6 +14,12 @@ defmodule Exsite.ReplyController do
       create(conn, %{"comment_id" => comment_id, "reply" => reply})
   end
 
+  def create(conn, _params) do
+    conn
+    |> put_status(400)
+    |> json(%{message: "Params error"})
+  end
+
   def create(conn, %{"comment_id" => comment_id, "reply" => reply}) do
     user_id =
       conn
@@ -39,11 +45,9 @@ defmodule Exsite.ReplyController do
           |> Post.changeset(%{last_commented_at: reply.inserted_at})
           |> Repo.update
 
-        IEx.pry
         conn |> render("show_reply.json", reply: reply)
       {:error, changeset} ->
-        IEx.pry
-        conn |> json(%{messge: "message"})
+        conn |> json(%{changeset: changeset})
     end
   end
 end
