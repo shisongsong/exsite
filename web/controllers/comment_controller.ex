@@ -35,7 +35,11 @@ defmodule Exsite.CommentController do
   end
 
   defp max_floor_number(post) do
-    query = from(c in Comment, where: c.post_id == ^post.id, select: max(c.floor_number))
+    query = 
+      from(c in Comment, 
+        where: c.post_id == ^post.id,
+        select: max(c.floor_number))
+
     if floor_number = Repo.one!(query) do
       floor_number + 1
     else

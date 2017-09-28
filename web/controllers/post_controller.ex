@@ -3,7 +3,7 @@ defmodule Exsite.PostController do
   use Exsite.Web, :controller
   alias Exsite.{Post, Comment}
   alias Exsite.Bll.{PostBll, TopicBll}
-  plug :authenticate_user when action in [:new, :create]
+  plug :authenticate_user when action in [:new, :create, :edit, :update]
 
   def index(conn, _params) do
     posts = Post |> Repo.all
@@ -73,7 +73,7 @@ defmodule Exsite.PostController do
     changeset = 
       post
       |> Post.changeset(post_params)
-      
+
     case Repo.update(changeset) do
       {:ok, post} ->
         conn

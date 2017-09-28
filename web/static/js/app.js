@@ -145,10 +145,7 @@ $(".reply-link").bind({
 $(".reply-submit").bind({
   click: function() {
     var form = $(this).closest("form");
-    console.log(form.data);
     $.ajax({
-      method: "POST",
-      dataType: "json",
       url: $(this).data("action"),
       data: {
         _csrf_token: getCsrfToken(),
@@ -156,6 +153,7 @@ $(".reply-submit").bind({
           content: form.find("textarea").val()
         }
       },
+      method: "POST",
       success: function(data) {
         console.log(data)
       },

@@ -18,9 +18,10 @@
   <hr>
 
   <div>
-    <a type="button" class="btn btn-default btn-sm">收藏</button>
-    <a type="button" class="btn btn-default btn-sm">举报</button>
-    <%= if @post.user_id == @current_user.id do %>
+    <a type="button" class="btn btn-default btn-sm">收藏</a>
+    <a type="button" class="btn btn-default btn-sm">举报</a>
+    <%= if !is_nil(@current_user) and
+      @post.user_id == @current_user.id do %>
       <%= link "编辑",
             to: post_path(@conn, :edit, @post),
             class: "btn btn-default btn-sm" %>

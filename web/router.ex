@@ -13,7 +13,6 @@ defmodule Exsite.Router do
   pipeline :api do
     plug :accepts, ["json"]
     plug :fetch_session
-    plug :put_secure_browser_headers
   end
 
   scope "/api", Exsite do
