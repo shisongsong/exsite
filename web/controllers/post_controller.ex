@@ -40,7 +40,7 @@ defmodule Exsite.PostController do
   end
 
   def show(conn, %{"id" => id}) do
-    post = 
+    post =
       Post
       |> preload([:topic, :user, :comments, comments: [
           :user, :replies, replies: [:user, :reply, reply: :user]]])
@@ -65,12 +65,12 @@ defmodule Exsite.PostController do
   end
 
   def update(conn, %{"id" => id, "post" => post_params}) do
-    post = 
+    post =
       Post
       |> Repo.get(id)
 
     IEx.pry
-    changeset = 
+    changeset =
       post
       |> Post.changeset(post_params)
 

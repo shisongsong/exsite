@@ -8,7 +8,6 @@ defmodule Exsite.Helpers.TimeHelper do
 
   def time_formatter(datetime) do
     date = Timex.to_date(datetime)
-    datetime = to_datetime(datetime)
     time = Timex.format!(datetime, "%H:%M", :strftime)
     diff = Timex.diff(date, Timex.today)
     cond do
@@ -21,9 +20,5 @@ defmodule Exsite.Helpers.TimeHelper do
       true ->
         Timex.format!(datetime, "%Y-%m-%d %H:%M", :strftime)
     end
-  end
-
-  defp to_datetime(datetime) do
-    Timex.shift(datetime, hours: 8)
   end
 end

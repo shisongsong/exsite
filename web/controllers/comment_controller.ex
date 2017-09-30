@@ -1,4 +1,5 @@
 defmodule Exsite.CommentController do
+  require IEx
   use Exsite.Web, :controller
 
   alias Exsite.Router.Helpers
@@ -18,6 +19,8 @@ defmodule Exsite.CommentController do
                 floor_number: max_floor_number(post)
               }
     changeset = Comment.changeset(%Comment{}, comment)
+
+    IEx.pry
     case Repo.insert(changeset) do
       {:ok, comment} ->
         # TODO add replies
@@ -29,14 +32,40 @@ defmodule Exsite.CommentController do
           |> Repo.update
         post = post |> Repo.preload(:comments)
         redirect conn, to: Helpers.post_path(conn, :show, post)
+
       {:error, changeset} ->
-        render conn, Exsite.PostView, :show, post: post, changeset: changeset
+        conn
+        |> render(Exsite.PostView, :show, post: post, changeset: changeset)
+    end
+  end
+
+  def delete(conn, %{"post_id" => post_id, "id" => id}) do
+    comment =
+      Comment
+      |> Repo.get!(id)
+
+    post =
+      Post
+      |> Repo.get(post_id)
+
+    changeset =
+      comment
+      |> Ecto.Changeset.change(deleted_at: DateTime.utc_now)
+
+    case Repo.update(changeset) do
+      {:ok, comment} ->
+        conn
+        |> put_flash(:info, "Comment deleted")
+        |> redirect(to: Helpers.post_path(conn, :show, post))
+      {:error, changeset} ->
+        conn
+        |> render(Exsite.PostView, :show, post: post, changeset: changeset)
     end
   end
 
   defp max_floor_number(post) do
-    query = 
-      from(c in Comment, 
+    query =
+      from(c in Comment,
         where: c.post_id == ^post.id,
         select: max(c.floor_number))
 

@@ -30,7 +30,7 @@ defmodule Exsite.Router do
     resources "/sessions", SessionController, only: [:new, :create]
     resources "/topics", TopicController
     resources "/posts", PostController do
-      resources "/comments", CommentController, only: [:create, :update]
+      resources "/comments", CommentController, only: [:create, :update, :delete]
     end
 
   end

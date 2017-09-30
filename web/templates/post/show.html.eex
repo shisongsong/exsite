@@ -23,8 +23,8 @@
     <%= if !is_nil(@current_user) and
       @post.user_id == @current_user.id do %>
       <%= link "编辑",
-            to: post_path(@conn, :edit, @post),
-            class: "btn btn-default btn-sm" %>
+        to: post_path(@conn, :edit, @post),
+        class: "btn btn-default btn-sm" %>
     <% end %>
   </div>
 
@@ -34,71 +34,87 @@
       <ul class="media-list">
         <%= for comment <- @post.comments do %>
           <li class="media">
-            <div class="media-left">
-              <% link to: user_path(@conn, :show, comment.user) do %>
-                <img class="" src="images/phoenix.png" alt="avatar">
-              <% end %>
-            </div>
+            <%= if is_nil(comment.deleted_at) do %>
+              <div class="media-left">
+                <% link to: user_path(@conn, :show, comment.user) do %>
+                  <img class="" src="images/phoenix.png" alt="avatar">
+                <% end %>
+              </div>
 
-            <div class="media-body">
-              <small class="info">
-                <a class="topic-link" href="#<%= comment.floor_number %>"
-                    name="<%= comment.floor_number %>">
-                  <b><%= comment.floor_number %>楼</b>
-                </a>
-                <%= link comment.user.nickname,
-                    to: user_path(@conn, :show, comment.user),
-                    class: "user-link" %>
-                <%= time_formatter comment.inserted_at %>
-              </small>
-              <article>
-                <%= raw Earmark.as_html!(comment.content) %> 
-              </article>
+              <div class="media-body">
+                <small class="info">
+                  <a class="topic-link" href="#<%= comment.floor_number %>"
+                      name="<%= comment.floor_number %>">
+                    <b><%= comment.floor_number %>楼</b>
+                  </a>
+                  <%= link comment.user.nickname,
+                      to: user_path(@conn, :show, comment.user),
+                      class: "user-link" %>
+                  <%= time_formatter comment.inserted_at %>
+                </small>
+                <article>
+                  <%= raw Earmark.as_html!(comment.content) %> 
+                </article>
 
-              <%= if length(comment.replies) > 0 do %>
-                <ul class="media-list">
-                  <%= for reply <- comment.replies do %>
-                    <li class="media">
-                      <div class="media-body">
-                        <%= link reply.user.nickname,
-                            to: user_path(@conn, :show, reply.user),
-                            class: "user-link"
-                        %>
-                        <%= if reply.reply_id do %>回复
-                          <%= link reply.reply.user.nickname,
-                              to: user_path(@conn, :show, reply.reply.user),
+                <%= if length(comment.replies) > 0 do %>
+                  <ul class="media-list">
+                    <%= for reply <- comment.replies do %>
+                      <li class="media">
+                        <div class="media-body">
+                          <%= link reply.user.nickname,
+                              to: user_path(@conn, :show, reply.user),
                               class: "user-link"
                           %>
-                        <% end %>:
-                        <%= raw Earmark.as_html!(reply.content) %>
-                      </div>
-                    </li>
-                  <% end %>
-                </ul>
+                          <%= if reply.reply_id do %>回复
+                            <%= link reply.reply.user.nickname,
+                              to: user_path(@conn, :show, reply.reply.user),
+                              class: "user-link"
+                            %>
+                          <% end %>:
+                          <%= raw Earmark.as_html!(reply.content) %>
+                        </div>
+                      </li>
+                    <% end %>
+                  </ul>
+                <% end %>
+
+                <%= if !is_nil(@current_user) and @current_user.id == @post.user_id do %>
+                  <div class="">
+                    <a class="reply-link btn btn-default">reply</a>
+                    <a class="btn btn-default">like</a>
+                    <a class="btn btn-default">dislike</a>
+                    <a class="btn btn-default">complaint</a>
+                    <%= link "edit",
+                      to: post_comment_path(@conn, :delete, @post.id, comment.id),
+                      method: "delete",
+                      data: [confirm: "Are you sure?"],
+                      class: "btn btn-danger btn-xs" %>
+                  </div>
+                  <form>
+                    <div class="form-group">
+                      <textarea name="reply[content]"
+                                class="form-control">
+                      </textarea>
+                    </div>
+                    <div class="form-group">
+                      <button class="btn btn-primary reply-submit"
+                        data-action="<%= comment_reply_path(@conn, :create, comment.id) %>">
+                        Reply
+                      </button>
+                    </div>
+                  </form>
+                <% end %>
+              </div>
+
+              <%= if !is_nil(@current_user) and @current_user.id == @post.user_id do %>
+                <div class="media-right media-top">
+                  <a>赞</a>
+                </div>
               <% end %>
 
-              <div class="">
-                <a class="reply-link">reply</a>
-                <a>like</a>
-                <a>dislike</a>
-                <a>complaint</a>
-              </div>
-              <form>
-                <div class="form-group">
-                  <textarea name="reply[content]"
-                            class="form-control">
-                  </textarea>
-                </div>
-                <div class="form-group">
-                  <button class="btn btn-primary reply-submit"
-                    data-action="<%= comment_reply_path(@conn, :create, comment.id) %>">Reply</button>
-                </div>
-              </form>
-            </div>
-
-            <div class="media-right media-top">
-              <a>赞</a>
-            </div>
+            <% else %>
+              <s>The comment is deleted.</s>
+            <% end %>
           </li>
         <% end %>
       </ul>
@@ -137,6 +153,7 @@
         </div>
       <% end %>
     <% else %>
+
     <div class="panel panel-default">
       <div class="panel-body">
         需要

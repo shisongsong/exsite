@@ -6,8 +6,8 @@ defmodule Exsite.Reply do
     field :content_format, :string, default: "html"
     field :state, :integer, default: 0
     field :floor_number, :integer
-    field :modified_at, Ecto.DateTime
-    field :deleted_at, Ecto.DateTime
+    field :modified_at, Timex.Ecto.TimestampWithTimezone
+    field :deleted_at, Timex.Ecto.TimestampWithTimezone
 
     belongs_to :user, Exsite.User
     belongs_to :comment, Exsite.Comment
@@ -28,7 +28,6 @@ defmodule Exsite.Reply do
 
   @cast_fields @required_fields ++ [
     :content_format,
-    :state,
     :floor_number,
     :deleted_at,
     :modified_at]

@@ -18,8 +18,21 @@ defmodule Exsite.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {Exsite, []},
-     applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :comeonin, :scrivener_ecto, :scrivener_html, :qiniu, :timex]]
+     applications: [
+      :phoenix,
+      :phoenix_pubsub,
+      :phoenix_html,
+      :cowboy,
+      :logger,
+      :gettext,
+      :phoenix_ecto,
+      :postgrex,
+      :comeonin,
+      :scrivener_ecto,
+      :scrivener_html,
+      :qiniu,
+      :timex,
+      :timex_ecto]]
   end
 
   # Specifies which paths to compile per environment.
@@ -43,7 +56,8 @@ defmodule Exsite.Mixfile do
      {:scrivener_html, "~> 1.7"},
      {:earmark, "~> 1.2"},
      {:qiniu, "~> 0.3.0"},
-     {:timex, "~> 3.0"}
+     {:timex, "~> 3.0"},
+     {:timex_ecto, "~> 3.0"}
      ]
   end
 

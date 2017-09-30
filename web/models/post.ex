@@ -5,14 +5,14 @@ defmodule Exsite.Post do
   schema "posts" do
     field :title, :string
     field :content, :string
-    field :content_format, :string, default: "html"
-    field :last_commented_at, Ecto.DateTime
+    field :content_format, :string, default: "markdown"
+    field :last_commented_at, Timex.Ecto.TimestampWithTimezone
     field :last_comment_user_id, :integer
     field :state, :integer, default: 0
     field :commentes_count, :integer, default: 0
     field :favorates_count, :integer, default: 0
-    field :suggested_at, Ecto.DateTime
-    field :deleted_at, Ecto.DateTime
+    field :suggested_at, Timex.Ecto.TimestampWithTimezone
+    field :deleted_at, Timex.Ecto.TimestampWithTimezone
     belongs_to :user, Exsite.User
     belongs_to :topic, Exsite.Topic
     has_many :comments, Exsite.Comment
@@ -30,6 +30,7 @@ defmodule Exsite.Post do
     :topic_id]
 
   @cast_fields @required_fields ++ [
+    :state,
     :last_commented_at,
     :last_comment_user_id,
     :commentes_count,
