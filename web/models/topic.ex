@@ -4,7 +4,7 @@ defmodule Exsite.Topic do
   schema "topics" do
     field :name, :string
     field :position, :integer
-    field :deleted_at, Timex.Ecto.TimestampWithTimezone
+    field :deleted_at, Timex.Ecto.DateTime
     has_many :children, Exsite.Topic, foreign_key: :parent_topic_id
     belongs_to :parent, Exsite.Topic, foreign_key: :parent_topic_id
     has_many :posts, Exsite.Post

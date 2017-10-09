@@ -6,13 +6,13 @@ defmodule Exsite.Post do
     field :title, :string
     field :content, :string
     field :content_format, :string, default: "markdown"
-    field :last_commented_at, Timex.Ecto.TimestampWithTimezone
+    field :last_commented_at, Timex.Ecto.DateTime
     field :last_comment_user_id, :integer
     field :state, :integer, default: 0
     field :commentes_count, :integer, default: 0
     field :favorates_count, :integer, default: 0
-    field :suggested_at, Timex.Ecto.TimestampWithTimezone
-    field :deleted_at, Timex.Ecto.TimestampWithTimezone
+    field :suggested_at, Timex.Ecto.DateTime
+    field :deleted_at, Timex.Ecto.DateTime
     belongs_to :user, Exsite.User
     belongs_to :topic, Exsite.Topic
     has_many :comments, Exsite.Comment

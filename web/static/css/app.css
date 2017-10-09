@@ -123,10 +123,15 @@ pre {
   border-bottom: 1px solid #eee;
 }
 
-.media-list .media{
+.comments>.media-list>.media{
   margin: 0;
   padding: 10px 0;
   border-bottom: 1px solid #eee; 
+}
+
+.comment-action {
+  display: flex;
+  justify-content: space-between;
 }
 
 img {

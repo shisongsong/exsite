@@ -79,16 +79,19 @@
                 <% end %>
 
                 <%= if !is_nil(@current_user) and @current_user.id == @post.user_id do %>
-                  <div class="">
-                    <a class="reply-link btn btn-default">reply</a>
-                    <a class="btn btn-default">like</a>
-                    <a class="btn btn-default">dislike</a>
-                    <a class="btn btn-default">complaint</a>
-                    <%= link "edit",
-                      to: post_comment_path(@conn, :delete, @post.id, comment.id),
-                      method: "delete",
-                      data: [confirm: "Are you sure?"],
-                      class: "btn btn-danger btn-xs" %>
+                  <div class="comment-action">
+                    <a class="reply-toggle">展开</a>
+                    <div>
+                      <a class="reply-link btn btn-default btn-xs">回复</a>
+                      <a class="btn btn-default btn-xs">赞</a>
+                      <a class="btn btn-default btn-xs">反对</a>
+                      <a class="btn btn-default btn-xs">举报</a>
+                      <%= link "删除",
+                        to: post_comment_path(@conn, :delete, @post.id, comment.id),
+                        method: "delete",
+                        data: [confirm: "Are you sure?"],
+                        class: "btn btn-danger btn-xs" %>
+                    </div>
                   </div>
                   <form>
                     <div class="form-group">
@@ -98,19 +101,14 @@
                     </div>
                     <div class="form-group">
                       <button class="btn btn-primary reply-submit"
-                        data-action="<%= comment_reply_path(@conn, :create, comment.id) %>">
-                        Reply
+                        data-action="<%= comment_reply_path(@conn,
+                                            :create, comment.id) %>">
+                       回复 
                       </button>
                     </div>
                   </form>
                 <% end %>
               </div>
-
-              <%= if !is_nil(@current_user) and @current_user.id == @post.user_id do %>
-                <div class="media-right media-top">
-                  <a>赞</a>
-                </div>
-              <% end %>
 
             <% else %>
               <s>The comment is deleted.</s>

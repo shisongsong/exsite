@@ -6,7 +6,7 @@ defmodule Exsite.Comment do
     field :content_format, :string, default: "html"
     field :state, :integer, default: 0
     field :floor_number, :integer
-    field :deleted_at, Timex.Ecto.TimestampWithTimezone
+    field :deleted_at, Timex.Ecto.DateTime
     belongs_to :user, Exsite.User
     belongs_to :post, Exsite.Post
     has_many :replies, Exsite.Reply

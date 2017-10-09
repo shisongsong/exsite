@@ -11,6 +11,7 @@ defmodule Exsite.ReplyController do
       reply =
         reply
         |> Map.merge(%{"reply_id" => reply_id})
+
       create(conn, %{"comment_id" => comment_id, "reply" => reply})
   end
 
@@ -22,7 +23,6 @@ defmodule Exsite.ReplyController do
  # end
 
   def create(conn, %{"comment_id" => comment_id, "reply" => reply}) do
-    IEx.pry
     user_id =
       conn
       |> get_session(:user_id)
@@ -47,7 +47,6 @@ defmodule Exsite.ReplyController do
           |> Post.changeset(%{last_commented_at: reply.inserted_at})
           |> Repo.update
 
-        IEx.pry
         conn |> render("show_reply.json", reply: reply)
       {:error, changeset} ->
         IEx.pry

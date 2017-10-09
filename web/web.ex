@@ -23,9 +23,6 @@ defmodule Exsite.Web do
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
-        
-      @timestamps_opts [type: Timex.Ecto.TimestampWithTimezone,
-                        autogenerate: {Timex.Ecto.TimestampWithTimezone, :autogenerate}]
     end
   end
 

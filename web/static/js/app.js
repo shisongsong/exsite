@@ -136,7 +136,7 @@ function _replaceSelection(cm, active, startEnd, url) {
 // Toggle reply form 
 $(".reply-link").bind({
   click: function() {
-    var replyForm = $(this).closest("div").next("form");
+    var replyForm = $(this).closest(".comment-action").next("form");
     replyForm.toggle();
   }
 })
