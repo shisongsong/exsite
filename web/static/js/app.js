@@ -136,7 +136,8 @@ function _replaceSelection(cm, active, startEnd, url) {
 // Toggle reply form 
 $(".reply-link").bind({
   click: function() {
-    var replyForm = $(this).closest(".comment-action").next("form");
+    var replyForm = $(this).parents(".media-body").children(".reply-form");
+    console.log(replyForm)
     replyForm.toggle();
   }
 })
@@ -145,13 +146,13 @@ $(".reply-link").bind({
 $(".reply-submit").bind({
   click: function() {
     var form = $(this).closest("form");
+    var reply;
+    reply.content = form.find("textarea").val();
     $.ajax({
       url: $(this).data("action"),
       data: {
         _csrf_token: getCsrfToken(),
-        reply: {
-          content: form.find("textarea").val()
-        }
+        reply: reply
       },
       method: "POST",
       success: function(data) {

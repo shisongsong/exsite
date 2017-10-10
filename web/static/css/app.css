@@ -140,7 +140,37 @@ pre {
 
 .reply-list {
   background: #fbfbfb;
-  margin-bottom: 10px;
+  padding: 10px;
+  font-size: 12px;
+}
+
+.reply-list li {
+  margin-top: 5px;
+}
+
+.reply-list .media .reply-action {
+  font-size: 12px;
+  text-align: right;
+  width: 120px;
+  float: right;
+}
+
+.reply-list .media .reply-action a {
+  color: #ccc;
+  text-decoration: none;
+}
+
+.reply-list .media .reply-action a:hover {
+  color: #591270;
+}
+
+.reply-list .media .reply-body {
+  padding-right: 120px;
+  word-break:break-all;
+}
+
+.reply-list .media .reply-action>* {
+  margin: 0 5px;
 }
 
 img {

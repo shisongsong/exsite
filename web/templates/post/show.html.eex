@@ -56,26 +56,6 @@
                   <%= raw Earmark.as_html!(comment.content) %> 
                 </article>
 
-                <%= if length(comment.replies) > 0 do %>
-                  <ul class="media-list reply-list">
-                    <%= for reply <- comment.replies do %>
-                      <li class="media">
-                          <%= link reply.user.nickname,
-                              to: user_path(@conn, :show, reply.user),
-                              class: "user-link"
-                          %>
-                          <%= if reply.reply_id do %>回复
-                            <%= link reply.reply.user.nickname,
-                              to: user_path(@conn, :show, reply.reply.user),
-                              class: "user-link"
-                            %>
-                          <% end %>:
-                          <%= reply.content %>
-                      </li>
-                    <% end %>
-                  </ul>
-                <% end %>
-
                 <%= if !is_nil(@current_user) and @current_user.id == @post.user_id do %>
                   <div class="comment-action">
                     <a class="reply-toggle">展开</a>
@@ -91,21 +71,48 @@
                         class: "btn btn-danger btn-xs" %>
                     </div>
                   </div>
-                  <form class="reply-form">
-                    <div class="form-group">
-                      <textarea name="reply[content]"
-                                class="form-control">
-                      </textarea>
-                    </div>
-                    <div class="form-group">
-                      <button class="btn btn-primary reply-submit"
-                        data-action="<%= comment_reply_path(@conn,
-                                            :create, comment.id) %>">
-                       回复 
-                      </button>
-                    </div>
-                  </form>
                 <% end %>
+
+                <%= if length(comment.replies) > 0 do %>
+                  <ul class="media-list reply-list">
+                    <%= for reply <- comment.replies do %>
+                      <li class="media">
+                        <div class="reply-action">
+                          <a>回复</a>
+                          <a>赞</a>
+                        </div>
+                        <div class="reply-body">
+                          <%= link reply.user.nickname,
+                              to: user_path(@conn, :show, reply.user),
+                              class: "user-link"
+                          %>
+                          <%= if reply.reply_id do %>回复
+                            <%= link reply.reply.user.nickname,
+                              to: user_path(@conn, :show, reply.reply.user),
+                              class: "user-link"
+                            %>
+                          <% end %>:
+                          <%= reply.content %>
+                        </div>
+                      </li>
+                    <% end %>
+                  </ul>
+                <% end %>
+
+                <form class="reply-form">
+                  <div class="form-group">
+                    <textarea name="reply[content]"
+                              class="form-control">
+                    </textarea>
+                  </div>
+                  <div class="form-group">
+                    <button class="btn btn-primary reply-submit"
+                      data-action="<%= comment_reply_path(@conn,
+                                          :create, comment.id) %>">
+                     回复 
+                    </button>
+                  </div>
+                </form>
               </div>
 
             <% else %>
