@@ -57,10 +57,9 @@
                 </article>
 
                 <%= if length(comment.replies) > 0 do %>
-                  <ul class="media-list">
+                  <ul class="media-list reply-list">
                     <%= for reply <- comment.replies do %>
                       <li class="media">
-                        <div class="media-body">
                           <%= link reply.user.nickname,
                               to: user_path(@conn, :show, reply.user),
                               class: "user-link"
@@ -71,8 +70,7 @@
                               class: "user-link"
                             %>
                           <% end %>:
-                          <%= raw Earmark.as_html!(reply.content) %>
-                        </div>
+                          <%= reply.content %>
                       </li>
                     <% end %>
                   </ul>
@@ -93,7 +91,7 @@
                         class: "btn btn-danger btn-xs" %>
                     </div>
                   </div>
-                  <form>
+                  <form class="reply-form">
                     <div class="form-group">
                       <textarea name="reply[content]"
                                 class="form-control">

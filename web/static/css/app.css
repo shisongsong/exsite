@@ -129,9 +129,18 @@ pre {
   border-bottom: 1px solid #eee; 
 }
 
+.comments .reply-form {
+  display: none;
+}
+
 .comment-action {
   display: flex;
   justify-content: space-between;
+}
+
+.reply-list {
+  background: #fbfbfb;
+  margin-bottom: 10px;
 }
 
 img {
