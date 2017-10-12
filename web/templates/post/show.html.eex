@@ -20,8 +20,8 @@
   <div>
     <a type="button" class="btn btn-default btn-sm">收藏</a>
     <a type="button" class="btn btn-default btn-sm">举报</a>
-    <%= if current_user?(@conn)
-      and current_user(@conn).id == @post.user_id do %>
+    <%= if  current_user?
+      and current_user.id == @post.user_id do %>
       <%= link "编辑",
         to: post_path(@conn, :edit, @post),
         class: "btn btn-default btn-sm" %>
@@ -53,10 +53,10 @@
                   <%= time_formatter comment.inserted_at %>
                 </small>
                 <article>
-                  <%= raw Earmark.as_html!(comment.content) %> 
+                  <%= raw Earmark.as_html!(comment.content) %>
                 </article>
 
-                <%= if !is_nil(@current_user) and @current_user.id == @post.user_id do %>
+                <%= if current_user? do %>
                   <div class="comment-action">
                     <a class="reply-toggle">展开</a>
                     <div>
@@ -64,11 +64,13 @@
                       <a class="btn btn-default btn-xs">赞</a>
                       <a class="btn btn-default btn-xs">反对</a>
                       <a class="btn btn-default btn-xs">举报</a>
-                      <%= link "删除",
-                        to: post_comment_path(@conn, :delete, @post.id, comment.id),
-                        method: "delete",
-                        data: [confirm: "Are you sure?"],
-                        class: "btn btn-danger btn-xs" %>
+                      <%= if current_user.id == comment.id do %>
+                        <%= link "删除",
+                          to: post_comment_path(@conn, :delete, @post.id, comment.id),
+                          method: "delete",
+                          data: [confirm: "Are you sure?"],
+                          class: "btn btn-danger btn-xs" %>
+                      <% end %>
                     </div>
                   </div>
                 <% end %>
