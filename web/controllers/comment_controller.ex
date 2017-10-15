@@ -20,22 +20,25 @@ defmodule Exsite.CommentController do
               }
     changeset = Comment.changeset(%Comment{}, comment)
 
-    IEx.pry
     case Repo.insert(changeset) do
       {:ok, comment} ->
-        # TODO add replies
         comment = comment |> Repo.preload([:post, :user])
         {:ok, post} =
           post
           |> Post.changeset(%{last_commented_at: comment.inserted_at,
                               commentes_count: length(post.comments) + 1})
           |> Repo.update
-        post = post |> Repo.preload(:comments)
+        post =
+          post
+          |> Repo.preload(:comments)
         redirect conn, to: Helpers.post_path(conn, :show, post)
 
       {:error, changeset} ->
-        conn
-        |> render(Exsite.PostView, :show, post: post, changeset: changeset)
+        render conn,
+          Exsite.PostView,
+          :show,
+          post: post,
+          changeset: changeset
     end
   end
 

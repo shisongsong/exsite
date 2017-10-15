@@ -42,7 +42,6 @@ var simplemde;
 if($(".simplemde")[0]){
   simplemde = new SimpleMDE({
     element: $(".simplemde")[0],
-    lineWrapping: false,
     parsingConfig: {
       allowAtxHeaderWithoutSpace: true,
       strikethrough: false,

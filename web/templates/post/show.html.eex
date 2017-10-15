@@ -20,8 +20,8 @@
   <div>
     <a type="button" class="btn btn-default btn-sm">收藏</a>
     <a type="button" class="btn btn-default btn-sm">举报</a>
-    <%= if  current_user?
-      and current_user.id == @post.user_id do %>
+    <%= if !is_nil(@current_user)
+      and @current_user.id == @post.user_id do %>
       <%= link "编辑",
         to: post_path(@conn, :edit, @post),
         class: "btn btn-default btn-sm" %>

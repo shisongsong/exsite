@@ -1,7 +1,36 @@
-<b><%= @user.nickname %></b>
-
 <div class="col-md-3">
-  <%= render Exsite.SharedView, "", conn: @conn %>
+  <%= # render Exsite.SharedView, "", conn: @conn %>
+
+  <div class="panel panel-default user-panel">
+    <div class="panel-body">
+      <div class="media">
+        <div class="media-left">
+          <img class="media-object avatar img-64"
+          src="<%= static_path(@conn, "/images/phoenix.png") %>"
+          alt="图片加载失败">
+        </div>
+        <div class="media-body">
+          <h4 class="media-heading"><%= @user.nickname %></h4>
+        </div>
+      </div>
+      joined in <%= @user.inserted_at |> local |> Timex.to_date %>
+    </div>
+
+    <div class="panel-footer">
+      <a>
+        <div>2</div>
+        <div>关注者</div>
+      </a>
+      <a>
+        <div>2</div>
+        <div>正在关注</div>
+      </a>
+      <a>
+        <div>2</div>
+        <div>收藏</div>
+      </a>
+    </div>
+  </div>
 </div>
 
 <div class="col-md-9">

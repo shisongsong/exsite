@@ -1,5 +1,4 @@
 defmodule Exsite.Helpers.TimeHelper do
-  require IEx
   use Timex
 
   def from_now(datetime) do
@@ -7,6 +6,7 @@ defmodule Exsite.Helpers.TimeHelper do
   end
 
   def time_formatter(datetime) do
+    datetime = local(datetime)
     date = Timex.to_date(datetime)
     time = Timex.format!(datetime, "%H:%M", :strftime)
     diff = Timex.diff(date, Timex.today)
@@ -21,4 +21,6 @@ defmodule Exsite.Helpers.TimeHelper do
         Timex.format!(datetime, "%Y-%m-%d %H:%M", :strftime)
     end
   end
+
+  def local(datetime), do: datetime |> Timex.local
 end
