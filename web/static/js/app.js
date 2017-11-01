@@ -133,33 +133,63 @@ function _replaceSelection(cm, active, startEnd, url) {
 }
 
 // Toggle reply form 
-$(".reply-link").bind({
+$(".icon-reply, .reply-link").bind({
   click: function() {
     var replyForm = $(this).parents(".media-body").children(".reply-form");
-    console.log(replyForm)
-    replyForm.toggle();
+    var reply_id = $(this).attr("data-reply-id");
+    var replied_label = replyForm.find(".replied-label");
+
+    replyForm.find("input[name='reply[reply_id]']").remove();
+
+    // 判断被回复的是不是评论
+    if(reply_id) {
+      replyForm.append(
+        "<input name='reply[reply_id]' type='hidden' value='" + reply_id + "' >");
+
+      replied_label.
+        find(".replied-nickname").
+        html("回复："+$(this).data("userNickname"));
+      replied_label.show();
+      if(!replyForm.is(":visible")) replyForm.show();
+    }
+    else {
+      replyForm.toggle();
+    }
   }
 })
 
-// submit reply
-$(".reply-submit").bind({
+$(".replied-label .glyphicon-remove").bind({
   click: function() {
-    var form = $(this).closest("form");
-    var reply;
-    reply.content = form.find("textarea").val();
+    var replyForm = $(this).closest(".reply-form");
+    var replied_label = $(this).closest(".replied-label");
+
+    replyForm.find("input[name='reply[reply_id]']").remove();
+    replied_label.find(".replied-nickname").html();
+    replied_label.hide();
+  }
+})
+
+// 提交回复
+$(".reply-form").submit(function() {
+  if($.trim($(this).find("textarea").val()).length > 0) {
     $.ajax({
-      url: $(this).data("action"),
-      data: {
-        _csrf_token: getCsrfToken(),
-        reply: reply
-      },
+      url: $(this).attr("action"),
+      data: $(this).serialize(),
       method: "POST",
       success: function(data) {
-        console.log(data)
       },
-      error: function(result) {
-        console.log(result)
+      error: function(res) {
       }
     });
   }
+  else {
+    var error_info = $(this).find(".error-info");
+    error_info.html("内容不可为空").show();
+    $(this).find("textarea").focus();
+    setTimeout(function() {
+      error_info.hide();
+    }, 3000);
+  }
+
+  return false; // 使form的action跳转失效
 })

@@ -43,8 +43,9 @@
 
               <div class="media-body">
                 <small class="info">
-                  <a class="topic-link" href="#<%= comment.floor_number %>"
-                      name="<%= comment.floor_number %>">
+                  <a class="topic-link"
+                     href="#<%= comment.floor_number %>"
+                     name="<%= comment.floor_number %>">
                     <b><%= comment.floor_number %>楼</b>
                   </a>
                   <%= link comment.user.nickname,
@@ -56,20 +57,45 @@
                   <%= raw Earmark.as_html!(comment.content) %>
                 </article>
 
-                <%= if current_user? do %>
+                <%= if !is_nil(@current_user) do %>
                   <div class="comment-action">
-                    <a class="reply-toggle">展开</a>
+                    <a class="reply-toggle"></a>
                     <div>
-                      <a class="reply-link btn btn-default btn-xs">回复</a>
-                      <a class="btn btn-default btn-xs">赞</a>
-                      <a class="btn btn-default btn-xs">反对</a>
-                      <a class="btn btn-default btn-xs">举报</a>
-                      <%= if current_user.id == comment.id do %>
-                        <%= link "删除",
-                          to: post_comment_path(@conn, :delete, @post.id, comment.id),
-                          method: "delete",
-                          data: [confirm: "Are you sure?"],
-                          class: "btn btn-danger btn-xs" %>
+                      <a class="icon-reply"
+                         data-toggle="tooltip"
+                         data-placement="top"
+                         title="评论">
+                        <span class="glyphicon glyphicon-comment"
+                              aria-hidden="true"></span>
+                      </a>
+                      <a class="icon-like"
+                         data-toggle="tooltip"
+                         data-placement="top"
+                         title="赞">
+                        <span class="glyphicon glyphicon-thumbs-up"
+                              aria-hidden="true"></span>
+                      </a>
+                      <a class="icon-complait"
+                         data-toggle="tooltip"
+                         data-placement="top"
+                         title="举报">
+                        <span class="glyphicon glyphicon-alert"
+                              aria-hidden="true"></span>
+                      </a>
+                      <%= if @current_user.id == comment.user_id do %>
+                        <%= link [
+                            to: post_comment_path(@conn,
+                                :delete, @post.id,comment.id),
+                            class: "",
+                            method: "delete",
+                            title: "删除",
+                            data: [
+                              confirm: "确定要删除？",
+                              toggle: "tooltip"
+                            ]] do %>
+                          <span class="glyphicon glyphicon-trash"
+                                aria-hidden="true"></span>
+                        <% end %>
                       <% end %>
                     </div>
                   </div>
@@ -80,7 +106,10 @@
                     <%= for reply <- comment.replies do %>
                       <li class="media">
                         <div class="reply-action">
-                          <a>回复</a>
+                          <a class="reply-link"
+                            data-reply-id="<%= reply.id %>"
+                            data-user-nickname="<%= reply.user.nickname %>" >
+                            回复</a>
                           <a>赞</a>
                         </div>
                         <div class="reply-body">
@@ -101,18 +130,27 @@
                   </ul>
                 <% end %>
 
-                <form class="reply-form">
+                <form class="reply-form"
+                      action="<%= reply_path(@conn, :create, comment.id) %>"
+                      method="POST">
+                  <input name="_csrf_token"
+                         type="hidden"
+                         value="<%= get_csrf_token %>" >
                   <div class="form-group">
-                    <input type="hidden" name="reply[user_id]"/>
                     <textarea name="reply[content]"
                               class="form-control"></textarea>
                   </div>
                   <div class="form-group">
-                    <button class="btn btn-primary reply-submit"
-                      data-action="<%= comment_reply_path(@conn,
-                                          :create, comment.id) %>">
-                     回复
-                    </button>
+                    <%= submit "回复", class: "btn btn-primary" %>
+
+                    <span class="replied-label">
+                      <span class="glyphicon glyphicon-remove"
+                            aria-hidden="true">
+                      </span>
+                      <span class="replied-nickname"></span>
+                    </span>
+
+                    <span class="error-info"></span>
                   </div>
                 </form>
               </div>
@@ -157,6 +195,7 @@
              class: "form-control file-input" %>
         </div>
       <% end %>
+
     <% else %>
 
     <div class="panel panel-default">

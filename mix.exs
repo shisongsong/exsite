@@ -57,7 +57,8 @@ defmodule Exsite.Mixfile do
      {:earmark, "~> 1.2"},
      {:qiniu, "~> 0.3.0"},
      {:timex, "~> 3.0"},
-     {:timex_ecto, "~> 3.0"}
+     {:timex_ecto, "~> 3.0"},
+     {:phoenix_haml, "~> 0.2"}
      ]
   end
 

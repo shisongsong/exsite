@@ -3,7 +3,6 @@ body {
   margin-top: 0;
 }
 
-ul.media-list,
 ul.list-group {
   margin-top: 0;
 }
@@ -132,10 +131,49 @@ pre {
   display: none;
 }
 
+.comments .reply-form .replied-label {
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  background: #591270;
+  padding: 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  opacity: 0.8;
+  display: none;
+}
+
+.comments .reply-form .replied-label:hover {
+  opacity: 1;
+}
+
+.comments .reply-form .replied-label .glyphicon-remove:hover {
+  font-size: 13px;  
+}
+
+.error-info {
+  color: red;
+  font-size: 12px;
+  margin-left: 10px;
+  display: none;
+}
+
 .comment-action {
   display: flex;
   justify-content: space-between;
 }
+
+.comment-action>div>a {
+  opacity: 0.8;
+  color: #591270;
+  margin-right: 10px;
+  text-decoration:none;
+}
+
+.comment-action>div>a:hover {
+  opacity: 1; 
+}
+
 
 .reply-list {
   background: #fbfbfb;

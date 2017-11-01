@@ -1,0 +1,32 @@
+!!! 5
+%html(lang="en")
+  = render "_head.html", conn: @conn
+
+  %body
+    .header
+      .container
+        .navbar
+          %a.navbar-brand(href="/")
+            %b Exsite
+          %ul.nav.navbar-nav.navbar-right
+            - if @current_user do
+              %li
+                = link @current_user.nickname, to: user_path(@conn, :show, @current_user)
+              %li
+                %a#logout(data-user-id="#{@current_user.id}" data-csrf-token="#{get_csrf_token}") 退出
+            - else
+              %li
+                = link "登录", to: session_path(@conn, :new)
+                = link "注册", to: user_path(@conn, :new)
+
+      .container
+        %p.alert.alert-info(role="alert")= get_flash(@conn, :info)
+        %p.alert.alert-danger(role="alert")= get_flash(@conn, :error)
+
+        %main(role="main")
+          .row
+            = render @view_module, @view_template, assigns
+
+      - js_path = static_path(@conn, "/js/app.js")
+      %script(src="#{js_path}"))
+      %span#csrf-token(data-csrf-token="#{get_csrf_token}")

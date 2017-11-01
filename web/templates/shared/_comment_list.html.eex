@@ -1,0 +1,1 @@
+<%= if @page.total_pages > 1, do: pagination_links @page %>

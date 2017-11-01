@@ -19,14 +19,17 @@ defmodule Exsite.Router do
     pipe_through :api
     delete "/sessions/:user_id", SessionController, :delete
     post "/images", ImageController, :create
-    post "/comments/:comment_id/replies", ReplyController, :create, as: :comment_reply
+    post "/comments/:comment_id/replies", ReplyController, :create
   end
 
   scope "/", Exsite do
     pipe_through :browser
 
     get "/", PageController, :index
-    resources "/users", UserController, only: [:index, :show, :new, :create]
+    resources "/users", UserController,
+      only: [:index, :show, :new, :create] do
+      get "/:tab_key", UserController, :show, as: :tab
+    end
     resources "/sessions", SessionController, only: [:new, :create]
     resources "/topics", TopicController
     resources "/posts", PostController do

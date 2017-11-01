@@ -1,0 +1,1 @@
+- Calliope.render "user.haml", [conn: @conn, user: @user]

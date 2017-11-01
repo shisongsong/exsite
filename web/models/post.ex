@@ -16,6 +16,7 @@ defmodule Exsite.Post do
     belongs_to :user, Exsite.User
     belongs_to :topic, Exsite.Topic
     has_many :comments, Exsite.Comment
+    has_many :replies, through: [:comments, :replies]
 
     timestamps()
   end

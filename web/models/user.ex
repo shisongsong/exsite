@@ -7,6 +7,8 @@ defmodule Exsite.User do
     field :password, :string, virtual: true
     field :encrypted_password, :string
     has_many :posts, Exsite.Post
+    has_many :comments, Exsite.Comment
+    has_many :replies, Exsite.Reply
 
     timestamps()
   end

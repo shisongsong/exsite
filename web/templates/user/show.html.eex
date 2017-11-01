@@ -1,1 +1,6 @@
-<%= render "user.html", conn: @conn, user: @user %>
+<%= render "user.html", 
+    conn: @conn,
+    user: @user,
+    current_tab_key: @current_tab_key,
+    data: @data
+%>

@@ -1,0 +1,32 @@
+<ul class="nav nav-tabs">
+  <li role="presentation"
+    class=<%= if @current_tab_key == "posts", do: "active" %>>
+    <%= link "主题",
+        to: user_path(@conn, :show, @user) %>
+  </li>
+  <li role="presentation"
+    class=<%= if @current_tab_key == "comments", do: "active" %>>
+    <%= link "评论",
+        to: user_tab_path(@conn, :show, @user, "comments") %>
+  </li>
+  <li role="presentation"
+    class=<%= if @current_tab_key == "replies", do: "active" %>>
+    <%= link "回复",
+        to: user_tab_path(@conn, :show, @user, "replies") %>
+  </li>
+  <li role="presentation"
+    class=<%= if @current_tab_key == "favorites", do: "active" %>>
+    <%= link "收藏",
+        to: user_tab_path(@conn, :show, @user, "favorites") %>
+  </li>
+  <li role="presentation"
+    class=<%= if @current_tab_key == "followers", do: "active" %>>
+    <%= link "关注者",
+        to: user_tab_path(@conn, :show, @user, "followers") %>
+  </li>
+  <li role="presentation"
+    class=<%= if @current_tab_key == "followees", do: "active" %>>
+    <%= link "正在关注",
+        to: user_tab_path(@conn, :show, @user, "followees") %>
+  </li>
+</ul>

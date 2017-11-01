@@ -15,13 +15,6 @@ defmodule Exsite.ReplyController do
       create(conn, %{"comment_id" => comment_id, "reply" => reply})
   end
 
- # def create(conn, _) do
- #   IEx.pry
- #   conn
- #   |> put_status(400)
- #   |> json(%{message: "Params error"})
- # end
-
   def create(conn, %{"comment_id" => comment_id, "reply" => reply}) do
     user_id =
       conn
@@ -36,8 +29,12 @@ defmodule Exsite.ReplyController do
 
     reply =
       reply
-      |> Map.merge(%{"user_id" => user_id, "comment_id" => comment_id,
-          "content" => reply["content"]})
+      |> Map.merge(
+          %{
+            "user_id" => user_id,
+            "comment_id" => comment_id,
+            "content" => reply["content"]
+          })
 
     changeset = Reply.changeset(%Reply{}, reply)
     case Repo.insert(changeset) do
@@ -47,9 +44,13 @@ defmodule Exsite.ReplyController do
           |> Post.changeset(%{last_commented_at: reply.inserted_at})
           |> Repo.update
 
-        conn |> render("show_reply.json", reply: reply)
+        reply =
+          reply
+          |> Repo.preload([:user, :reply, reply: :user])
+
+        conn |> render("show.json", reply: reply)
+
       {:error, changeset} ->
-        IEx.pry
         conn |> json(%{changeset: changeset})
     end
   end

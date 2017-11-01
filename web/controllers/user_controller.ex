@@ -1,9 +1,9 @@
 defmodule Exsite.UserController do
   use Exsite.Web, :controller
-  alias Exsite.User
+  alias Exsite.{User, Post, Comment, Reply}
   alias Exsite.Bll.UserBll
-
-  plug :authenticate_user when action in [:index, :show]
+  plug :authenticate_user when action in [:index]
+  require IEx
 
   def index(conn, _params) do
     users = Repo.all(User)
@@ -33,15 +33,40 @@ defmodule Exsite.UserController do
         conn
         |> Exsite.Auth.login(user)
         |> put_flash(:info, "#{user.nickname} created")
-        |> redirect(to: user_path(conn, :index))
+        |> redirect(to: user_path(conn, :show))
 
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
   end
 
-  def show(conn, %{"id" => id}) do
-    user = Repo.get(User, id)
-    render conn, "show.html", user: user
+  def show(conn, %{"user_id" => id,
+                   "tab_key" => tab_key,
+                   "page" => page}) do
+    data =
+      case tab_key do
+        "posts" ->
+          Post |> preload([:user, :topic])
+        "comments" ->
+          Comment
+        "replies"->
+          Reply
+        _ ->
+          User
+      end
+      |> Repo.paginate([page: page, page_size: 50])
+    user = Repo.get!(User, id)
+
+    conn
+    |> assign(:current_tab_key, tab_key)
+    |> assign(:data, data)
+    |> render(:show, user: user)
   end
+
+  def show(conn, %{"user_id" => id, "tab_key" => tab_key}), do:
+    show(conn, %{"user_id" => id, "tab_key" => tab_key, "page" => 1})
+  def show(conn, %{"id" => id, "page" => page}), do:
+    show(conn, %{"user_id" => id, "tab_key" => "posts", "page" => page})
+  def show(conn, %{"id" => id}), do:
+    show(conn, %{"id" => id, "page" => 1})
 end

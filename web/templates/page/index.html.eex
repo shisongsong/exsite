@@ -13,7 +13,8 @@
       </li>
     <% end %>
   </ul>
-  <%= render Exsite.SharedView, "_post_list.html", page: @page, conn: @conn %>
+  <%= render Exsite.SharedView, "_post_list.html",
+      page: @page, conn: @conn %>
 </div>
 
 <div class="col-md-3">

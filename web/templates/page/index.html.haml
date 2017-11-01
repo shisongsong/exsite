@@ -1,0 +1,21 @@
+.col-md-9
+  %ul.nav.nav-tabs
+    - for topic <- @root_topics do
+      - if topic.id == @root_topic.id do
+        - active = "active"
+      - else
+        - active = ""
+
+      %li(role="presentation" class="#{active}")
+        = link topic.name, to: page_path(@conn, :index, root_topic: topic.id)
+
+  %ul.nav.nav-pills
+    - for topic <- @children_topics do
+      %li(role="presentation")
+        = link topic.name, to: topic_path(@conn, :show, topic)
+
+  = render Exsite.SharedView, "_post_list.html", page: @page, conn: @conn
+
+.col-md-3
+  = render Exsite.SharedView, "_new_post_button.html", conn: @conn, current_user: @current_user
+  = render Exsite.SharedView, "_side_bar_links.html"

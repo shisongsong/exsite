@@ -27,6 +27,7 @@ defmodule Exsite.Reply do
     :comment_id]
 
   @cast_fields @required_fields ++ [
+    :reply_id,
     :content_format,
     :floor_number,
     :deleted_at,

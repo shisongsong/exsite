@@ -1,6 +1,4 @@
 <div class="col-md-3">
-  <%= # render Exsite.SharedView, "", conn: @conn %>
-
   <div class="panel panel-default user-panel">
     <div class="panel-body">
       <div class="media">
@@ -34,4 +32,25 @@
 </div>
 
 <div class="col-md-9">
+  <%= render "_tab_nav.html",
+      conn: @conn,
+      user: @user,
+      current_tab_key: @current_tab_key
+  %>
+
+  <% template =
+       case @current_tab_key do
+         "posts" -> "_post_list.html"
+         "comments" -> "_comment_list.html"
+         "replies" -> "_comment_list.html"
+         "favorates" -> "_post_list.html"
+         "followers" -> "_follower_list.html"
+         "followees" -> "_followee_list.html"
+       end
+  %>
+  <%= render Exsite.SharedView, template, 
+      conn: @conn,
+      user: @user,
+      page: @data
+  %>
 </div>
