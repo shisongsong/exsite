@@ -3,7 +3,7 @@ defmodule Exsite.Mixfile do
 
   def project do
     [app: :exsite,
-     version: "0.0.#{committed_at}",
+     version: "0.0.#{committed_at()}",
      elixir: "~> 1.2",
      elixirc_paths: elixirc_paths(Mix.env),
      compilers: [:phoenix, :gettext] ++ Mix.compilers,
@@ -58,7 +58,8 @@ defmodule Exsite.Mixfile do
      {:qiniu, "~> 0.3.0"},
      {:timex, "~> 3.0"},
      {:timex_ecto, "~> 3.0"},
-     {:phoenix_haml, "~> 0.2"}
+     {:phoenix_haml, "~> 0.2"},
+     {:distillery, "~> 1.0"}
      ]
   end
 
