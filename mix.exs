@@ -18,10 +18,7 @@ defmodule Exsite.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {Exsite, []},
-     applications: [
-      :phoenix,
-      :phoenix_pubsub,
-      :phoenix_html,
+     applications: [ :phoenix, :phoenix_pubsub, :phoenix_html,
       :cowboy,
       :logger,
       :gettext,
@@ -61,7 +58,7 @@ defmodule Exsite.Mixfile do
      {:timex_ecto, "~> 3.0"},
      {:phoenix_haml, "~> 0.2"},
      {:edeliver, "~> 1.4.4"},
-     {:distillery, "~> 1.0"}
+     {:distillery, ">= 0.8.0", warn_missing: false}
      ]
   end
 
