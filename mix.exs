@@ -60,7 +60,7 @@ defmodule Exsite.Mixfile do
      {:timex, "~> 3.0"},
      {:timex_ecto, "~> 3.0"},
      {:phoenix_haml, "~> 0.2"},
-     {:edeliver, "~> 1.4.4"}
+     {:edeliver, "~> 1.4.4"},
      {:distillery, "~> 1.0"}
      ]
   end

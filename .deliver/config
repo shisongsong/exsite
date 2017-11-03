@@ -1,10 +1,10 @@
 APP="myapp"
 
-BUILD_HOST="shisongsong.top"
+BUILD_HOST="118.31.10.157"
 BUILD_USER="root"
 BUILD_AT="/tmp/edeliver/exsite/builds"
 
-STAGING_HOSTS="shisongsong.top"
+STAGING_HOSTS="118.31.10.157"
 STAGING_USER="root"
 DELIVER_TO="/home/web"
 
