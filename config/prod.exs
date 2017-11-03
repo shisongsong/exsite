@@ -13,7 +13,7 @@ use Mix.Config
 # which you typically run after static files are built.
 config :exsite, Exsite.Endpoint,
   http: [port: {:system, "PORT"}],
-  url: [host: "shisongsong.top", port: 80],
+  url: [host: "www.shisongsong.top", port: 80],
   cache_static_manifest: "priv/static/manifest.json",
   root: ".",
   server: true,
