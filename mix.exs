@@ -30,7 +30,8 @@ defmodule Exsite.Mixfile do
       :qiniu,
       :timex,
       :timex_ecto,
-      :edeliver]]
+      :edeliver,
+      :exrm]]
   end
 
   # Specifies which paths to compile per environment.
@@ -58,7 +59,7 @@ defmodule Exsite.Mixfile do
      {:timex_ecto, "~> 3.0"},
      {:phoenix_haml, "~> 0.2"},
      {:edeliver, "~> 1.4.4"},
-     {:distillery, ">= 0.8.0", warn_missing: false}
+     {:exrm, "~> 1.0"}
      ]
   end
 
