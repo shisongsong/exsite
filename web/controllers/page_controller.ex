@@ -26,7 +26,11 @@ defmodule Exsite.PageController do
 
   def index(conn, %{"page" => page}) do
     root_topic = TopicBll.default_root_topic
-    index(conn, %{"root_topic" => root_topic.id, "page" => page})
+    if is_nil(root_topic) do
+      conn |> redirect(to: topic_path(conn, :index))
+    else
+      index(conn, %{"root_topic" => root_topic.id, "page" => page})
+    end
   end
 
   def index(conn, %{"root_topic" => root_topic}) do

@@ -33,7 +33,7 @@ defmodule Exsite.UserController do
         conn
         |> Exsite.Auth.login(user)
         |> put_flash(:info, "#{user.nickname} created")
-        |> redirect(to: user_path(conn, :show))
+        |> redirect(to: user_path(conn, :show, user))
 
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)

@@ -1,8 +1,6 @@
 defmodule Exsite.Topic do
   use Exsite.Web, :model
-
-  schema "topics" do
-    field :name, :string
+schema "topics" do field :name, :string
     field :position, :integer
     field :deleted_at, Timex.Ecto.DateTime
     has_many :children, Exsite.Topic, foreign_key: :parent_topic_id

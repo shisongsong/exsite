@@ -10,6 +10,8 @@ defmodule Exsite.Comment do
     belongs_to :user, Exsite.User
     belongs_to :post, Exsite.Post
     has_many :replies, Exsite.Reply
+    has_one :referenced, Comment, foreign_key: :referenced_id
+    belongs_to :comment, Exsite.Comment, foreign_key: :referenced_id
 
     timestamps()
   end
@@ -22,13 +24,9 @@ defmodule Exsite.Comment do
     :floor_number]
 
   @cast_fields @required_fields ++ [
-    :user_id,
-    :post_id,
-    :content,
-    :content_format,
     :deleted_at,
-    :state,
-    :floor_number]
+    :referenced_id,
+    :state]
 
   @doc """
   Builds a changeset based on the `struct` and `params`.
