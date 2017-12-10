@@ -65,15 +65,8 @@ defmodule Exsite.PostController do
   end
 
   def update(conn, %{"id" => id, "post" => post_params}) do
-    post =
-      Post
-      |> Repo.get(id)
-
-    IEx.pry
-    changeset =
-      post
-      |> Post.changeset(post_params)
-
+    post = Post |> Repo.get(id)
+    changeset = post |> Post.changeset(post_params)
     case Repo.update(changeset) do
       {:ok, post} ->
         conn

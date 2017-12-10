@@ -177,6 +177,9 @@ $(".reply-form").submit(function() {
       data: $(this).serialize(),
       method: "POST",
       success: function(data) {
+        $(this).hide();
+        window.location.reload();
+
       },
       error: function(res) {
       }
