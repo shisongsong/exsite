@@ -10,7 +10,7 @@ STAGING_HOSTS="118.31.10.157"
 STAGING_USER="root"
 DELIVER_TO="/home/web"
 
-PRODUCTION_HOSTS="www.shisongsong.top" # deploy / production hosts separated by space
+PRODUCTION_HOSTS="118.31.10.157" # deploy / production hosts separated by space
 PRODUCTION_USER="root" # local user at deploy hosts
 DELIVER_TO="/opt/exsite" # deploy directory on production hosts
 
