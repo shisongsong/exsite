@@ -27,7 +27,6 @@ defmodule Exsite.Mixfile do
       :comeonin,
       :scrivener_ecto,
       :scrivener_html,
-      :phoenix_haml,
       :earmark,
       :qiniu,
       :timex,
@@ -59,7 +58,6 @@ defmodule Exsite.Mixfile do
      {:qiniu, "~> 0.3.0"},
      {:timex, "~> 3.0"},
      {:timex_ecto, "~> 3.0"},
-     {:phoenix_haml, "~> 0.2"},
      {:edeliver, "~> 1.4.4"},
      {:exrm, "~> 1.0"}
      ]
