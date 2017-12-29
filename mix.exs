@@ -27,7 +27,7 @@ defmodule Exsite.Mixfile do
       :comeonin,
       :scrivener_ecto,
       :scrivener_html,
-      :phoenix_html,
+      :phoenix_haml,
       :earmark,
       :qiniu,
       :timex,
